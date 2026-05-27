@@ -34,8 +34,8 @@ export function AuthScopes() {
       <p className="border-t border-border px-5 py-4 text-sm text-text-muted">
         One local account with capability scopes in Rust AppState — not separate
         user accounts. App lock uses TOTP or biometric only; sign-out zeroizes
-        keys and stops IPC. Failed auth attempts are rate-limited with exponential
-        backoff.
+        keys and stops IPC. App lock does not stop IPC — only sign-out does.
+        Failed auth attempts are rate-limited with exponential backoff.
       </p>
     </div>
   );

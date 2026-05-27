@@ -34,9 +34,9 @@ export const SECURITY_GOALS = [
   },
   {
     goal: "Fail secure",
-    metric: "Lock or sign-out tears down IPC and zeroizes keys.",
+    metric: "Sign-out stops IPC and zeroizes keys; app lock does not.",
     detail:
-      "Signing out stops the tray core, closes the SQLCipher pool, and clears db_key from memory. Grants on disk cannot decrypt without a running, signed-in core.",
+      "App lock blocks vault, buckets, and settings UI but keeps keys in memory and the IPC server running — you can still approve requests. Sign-out tears down the tray core, closes SQLCipher, and clears db_key from memory.",
   },
 ] as const;
 
@@ -86,7 +86,7 @@ export const TRUST_LAYERS: TrustLayer[] = [
       "Python, Node, or CLI processes connecting over local IPC",
       "Cannot self-report identity — OS process inspection only",
       "Must present bucket ID, client token, and earn a grant",
-      "Hold injected values in os.environ after approval (out of Argus control)",
+      "Hold env values in os.environ after approval (out of Argus control)",
     ],
   },
 ];
@@ -95,7 +95,7 @@ export const IN_SCOPE_THREATS = [
   {
     id: "T1",
     threat: "Supply chain reads project .env",
-    mitigation: "Only ARGUS_BUCKET_ID and ARGUS_CLIENT_TOKEN belong in the repo.",
+    mitigation: "Keep ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in local .env — not secret values.",
     detail:
       "Secret values live in argus.db, outside the project tree. A leaked bucket ID is useless without Argus running and an approved grant.",
   },
@@ -158,9 +158,9 @@ export const OUT_OF_SCOPE = [
   },
   {
     id: "O3",
-    threat: "Malware after env injection",
+    threat: "Malware after env access",
     reason:
-      "Once secrets are in os.environ, the client application owns them. Argus controls the injection moment, not the client's runtime.",
+      "Once secrets are in os.environ, the client application owns them. Argus controls when values are provided, not the client's runtime.",
   },
   {
     id: "O4",
@@ -239,18 +239,23 @@ export const CRYPTO_LAYERS: CryptoLayer[] = [
 export const AUTH_SCOPES = [
   {
     scope: "APP",
-    requires: "Password + TOTP or biometric",
+    requires: "Password + TOTP or biometric (sign-in)",
     grants: "Dashboard, vault view, buckets view, settings",
   },
   {
     scope: "VAULT",
-    requires: "App unlocked (no separate vault timer)",
+    requires: "App unlocked (blocked while soft-locked)",
     grants: "Create, update, delete, reveal secrets",
   },
   {
     scope: "BUCKETS",
-    requires: "App unlocked",
+    requires: "App unlocked (blocked while soft-locked)",
     grants: "Bucket CRUD, env mappings, client token rotation",
+  },
+  {
+    scope: "IPC / approvals",
+    requires: "Signed in only — not blocked by app lock",
+    grants: "Process requests, approve/deny grants, revoke clients",
   },
 ] as const;
 
@@ -309,8 +314,8 @@ export const HARDENING_ITEMS = [
     icon: Activity,
     points: [
       "secrecy::Secret wrapper for key material",
-      "zeroize on drop for db_key and decrypted buffers",
-      "SQLCipher connection closed on lock",
+      "db_key and value_key cleared from memory on sign-out",
+      "Soft app lock keeps keys in memory — IPC and approvals still work",
     ],
   },
 ] as const;
