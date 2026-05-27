@@ -28,10 +28,10 @@ export function SecurityPage() {
           Security model
         </h1>
         <p className="mt-4 leading-relaxed text-text-muted">
-          Argus v0.1 is early software and has not been independently
-          security-audited. This page describes the design intent and controls
-          implemented in the open source desktop app. For the full specification,
-          parameter tables, and release checklist, see the repository.
+          Argus v0.1 is early software and has not been independently security-audited.
+          This page describes the design intent and controls implemented in the open
+          source desktop app. For the full specification, parameter tables, and release
+          checklist, see the repository.
         </p>
         <a
           href={LINKS.securityDocs}
@@ -72,8 +72,8 @@ export function SecurityPage() {
 
         <SecuritySection
           id="limitations"
-          title="Out of scope"
-          description="Conditions Argus does not attempt to defend against. Plan controls accordingly."
+          title="Known limitations"
+          description="Threats outside Argus's design boundary in the current release."
         >
           <Limitations />
         </SecuritySection>
@@ -102,10 +102,10 @@ export function SecurityPage() {
           <IpcDetail />
           <p className="mt-6 text-sm leading-relaxed text-text-muted">
             The requests window shows bucket name, full executable path, working
-            directory, git remote (if detected), and command line (with sensitive
-            flags stripped). IPC remains active while the app is locked — only
-            sign-out stops the server. App lock requires TOTP or biometric;
-            password is required at cold start sign-in.
+            directory, git remote (if detected), and command line (with sensitive flags
+            stripped). IPC remains active while the app is locked — only sign-out stops
+            the server. App lock requires TOTP or biometric; password is required at cold
+            start sign-in.
           </p>
         </SecuritySection>
 
@@ -131,10 +131,10 @@ export function SecurityPage() {
           className="pb-10 sm:pb-12"
         >
           <p className="text-sm leading-relaxed text-text-muted">
-            Report security issues through GitHub Security Advisories on the
-            repository — not public issues. See SECURITY.md for expected
-            response timelines and scope. Argus handles sensitive material;
-            treat reports as confidential until a fix is released.
+            Report security issues through GitHub Security Advisories on the repository —
+            not public issues. See SECURITY.md for expected response timelines and scope.
+            Argus handles sensitive material; treat reports as confidential until a fix is
+            released.
           </p>
         </SecuritySection>
       </div>
