@@ -95,7 +95,8 @@ export const IN_SCOPE_THREATS = [
   {
     id: "T1",
     threat: "Supply chain reads project .env",
-    mitigation: "Keep ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in local .env — not secret values.",
+    mitigation:
+      "Keep ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in local .env — not secret values.",
     detail:
       "Secret values live in argus.db, outside the project tree. A leaked bucket ID is useless without Argus running and an approved grant.",
   },
