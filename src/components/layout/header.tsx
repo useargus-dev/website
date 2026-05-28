@@ -1,24 +1,17 @@
-import { Shield } from "lucide-react";
+import { Shield, Terminal } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { LINKS } from "@/constants/links";
 import { SectionLink } from "@/components/layout/section-link";
 import { Brand } from "@/components/ui/brand";
 import { LinkButton } from "@/components/ui/button";
+import { headerIconButtonActiveClass } from "@/components/ui/header-icon-button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/cn";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   cn(
     "text-sm transition-colors",
-    isActive ? "text-text font-medium" : "text-text-muted hover:text-text"
-  );
-
-const securityIconClass = ({ isActive }: { isActive: boolean }) =>
-  cn(
-    "grid size-9 place-items-center rounded-md border transition-colors",
-    isActive
-      ? "border-signal/40 bg-surface-muted text-signal"
-      : "border-border bg-surface-raised text-text-muted hover:text-text"
+    isActive ? "text-text font-medium" : "text-text-muted hover:text-text",
   );
 
 export function Header() {
@@ -45,20 +38,35 @@ export function Header() {
           >
             Screenshots
           </SectionLink>
+          <NavLink to="/usage" className={navLinkClass}>
+            Usage
+          </NavLink>
           <NavLink to="/security" className={navLinkClass}>
             Security
           </NavLink>
         </nav>
-        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+        <div className="flex shrink-0 items-center gap-2">
+          <NavLink
+            to="/usage"
+            className={({ isActive }) =>
+              cn(headerIconButtonActiveClass(isActive), "sm:hidden")
+            }
+            aria-label="Usage"
+            title="Usage"
+          >
+            <Terminal size={20} aria-hidden />
+          </NavLink>
           <NavLink
             to="/security"
-            className={cn(securityIconClass, "sm:hidden")}
+            className={({ isActive }) =>
+              cn(headerIconButtonActiveClass(isActive), "sm:hidden")
+            }
             aria-label="Security"
             title="Security"
           >
-            <Shield size={18} aria-hidden />
+            <Shield size={20} aria-hidden />
           </NavLink>
-          <ThemeToggle />
+          <ThemeToggle className="hidden sm:grid" />
           <LinkButton
             href={LINKS.github}
             target="_blank"
@@ -72,7 +80,7 @@ export function Header() {
             href={LINKS.releases}
             target="_blank"
             rel="noreferrer"
-            className="px-3 text-xs sm:px-4 sm:text-sm"
+            className="hidden sm:inline-flex"
           >
             Download
           </LinkButton>

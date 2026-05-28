@@ -15,8 +15,21 @@ export function AppScreenshots() {
   }, []);
 
   useEffect(() => {
-    const el = thumbListRef.current?.children[activeIndex] as HTMLElement | undefined;
-    el?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    const container = thumbListRef.current;
+    const thumb = container?.children[activeIndex] as HTMLElement | undefined;
+    if (!container || !thumb) return;
+
+    // Scroll the thumbnail strip only — never window.scrollIntoView (jumps to #screenshots on load).
+    const vertical = container.scrollHeight > container.clientHeight + 4;
+    if (vertical) {
+      const top =
+        thumb.offsetTop - (container.clientHeight - thumb.clientHeight) / 2;
+      container.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    } else {
+      const left =
+        thumb.offsetLeft - (container.clientWidth - thumb.clientWidth) / 2;
+      container.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+    }
   }, [activeIndex]);
 
   return (

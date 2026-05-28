@@ -6,13 +6,17 @@ import { Features } from "@/components/marketing/features";
 import { Hero } from "@/components/marketing/hero";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { ProductTiers } from "@/components/marketing/product-tiers";
+import { UsageTeaser } from "@/components/marketing/usage-teaser";
 import { scrollToSectionWhenReady } from "@/lib/scroll-to-section";
 
 export function HomePage() {
   const { hash } = useLocation();
 
   useLayoutEffect(() => {
-    if (!hash) return;
+    if (!hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      return;
+    }
 
     const sectionId = hash.replace(/^#/, "");
     // Drop scroll position carried over from /security (or other long pages).
@@ -26,6 +30,7 @@ export function HomePage() {
       <ProductTiers />
       <Features />
       <HowItWorks />
+      <UsageTeaser />
       <AppScreenshots />
       <CtaSection />
     </>

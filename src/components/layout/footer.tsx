@@ -63,6 +63,11 @@ export function Footer() {
               </p>
               <ul className="mt-3 space-y-2 text-sm">
                 <li>
+                  <Link to="/usage" className="text-text-muted hover:text-text">
+                    Usage
+                  </Link>
+                </li>
+                <li>
                   <Link to="/security" className="text-text-muted hover:text-text">
                     Security
                   </Link>
