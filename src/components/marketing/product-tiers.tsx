@@ -1,14 +1,23 @@
 import { motion } from "motion/react";
-import { Check, Clock } from "lucide-react";
+import { Check } from "lucide-react";
+import { Link } from "react-router-dom";
 import { LINKS } from "@/constants/links";
 import { LinkButton } from "@/components/ui/button";
+import { cn } from "@/lib/cn";
 
-const openSourceFeatures = [
+const desktopFeatures = [
   "Single-user desktop vault",
   "SQLCipher encrypted database",
   "App buckets + env mappings",
   "Local IPC with human approval",
   "System tray + requests window",
+];
+
+const integrationFeatures = [
+  "npm install @useargus/node",
+  "loadEnv() — dotenv-style, secrets from Argus",
+  "ESM and CommonJS",
+  "Python, Go, Ruby, Java clients in development",
 ];
 
 export function ProductTiers() {
@@ -26,8 +35,9 @@ export function ProductTiers() {
             Built for developers who own their keys
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-text-muted">
-            Start with the open source edition today. A self-hosted system is on the
-            roadmap.
+            A local desktop vault on your machine — no cloud sync. Map env vars to
+            secrets, approve each process, and load them from your app with client
+            libraries.
           </p>
         </motion.div>
 
@@ -43,14 +53,14 @@ export function ProductTiers() {
               Available now
             </p>
             <h3 className="mt-2 text-2xl font-semibold text-text">
-              Open source edition
+              Desktop app
             </h3>
             <p className="mt-2 text-sm text-text-muted">
-              Free under AGPL-3.0. Run on your own machine for personal or
-              internal use.
+              Free under AGPL-3.0. Windows, macOS, and Linux — secrets stay on
+              your machine.
             </p>
             <ul className="mt-6 space-y-3">
-              {openSourceFeatures.map((item) => (
+              {desktopFeatures.map((item) => (
                 <li key={item} className="flex items-start gap-2 text-sm">
                   <Check size={16} className="mt-0.5 shrink-0 text-success" />
                   {item}
@@ -72,19 +82,37 @@ export function ProductTiers() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="relative rounded-xl border border-dashed border-border bg-surface-raised/50 p-8"
+            className="rounded-xl border border-border bg-surface p-8 shadow-subtle"
           >
-            <p className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-2.5 py-0.5 text-xs font-medium text-text-muted">
-              <Clock size={12} />
-              On the roadmap
+            <p className="text-xs font-medium uppercase tracking-wider text-signal">
+              Available now
             </p>
             <h3 className="mt-2 text-2xl font-semibold text-text">
-              Self-hosted system
+              Client libraries
             </h3>
             <p className="mt-2 text-sm text-text-muted">
-              On the roadmap. The community edition is the foundation — same
-              security model, local-first by default.
+              Load bucket secrets into{" "}
+              <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs">
+                process.env
+              </code>{" "}
+              before your app starts — Argus must be signed in locally.
             </p>
+            <ul className="mt-6 space-y-3">
+              {integrationFeatures.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-sm">
+                  <Check size={16} className="mt-0.5 shrink-0 text-success" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <Link
+              to="/usage"
+              className={cn(
+                "mt-8 inline-flex items-center justify-center rounded-md border border-border bg-surface-raised px-4 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-muted",
+              )}
+            >
+              Usage guide
+            </Link>
           </motion.article>
         </div>
       </div>
