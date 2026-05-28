@@ -114,6 +114,12 @@
     overflow-x: clip;
     max-width: 100%;
   }
+
+  #features,
+  #how-it-works,
+  #screenshots {
+    scroll-margin-top: 4.5rem;
+  }
 }
 
 @layer utilities {

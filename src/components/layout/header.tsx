@@ -1,6 +1,7 @@
 import { Shield } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { LINKS } from "@/constants/links";
+import { SectionLink } from "@/components/layout/section-link";
 import { Brand } from "@/components/ui/brand";
 import { LinkButton } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -26,15 +27,24 @@ export function Header() {
       <div className="mx-auto flex h-16 w-full max-w-6xl min-w-0 items-center justify-between gap-2 px-4 sm:gap-4 sm:px-5">
         <Brand className="min-w-0 shrink" />
         <nav className="hidden items-center gap-8 sm:flex">
-          <a href="/#features" className="text-sm text-text-muted hover:text-text">
+          <SectionLink
+            sectionId="features"
+            className="text-sm text-text-muted hover:text-text"
+          >
             Features
-          </a>
-          <a href="/#how-it-works" className="text-sm text-text-muted hover:text-text">
+          </SectionLink>
+          <SectionLink
+            sectionId="how-it-works"
+            className="text-sm text-text-muted hover:text-text"
+          >
             How it works
-          </a>
-          <a href="/#screenshots" className="text-sm text-text-muted hover:text-text">
+          </SectionLink>
+          <SectionLink
+            sectionId="screenshots"
+            className="text-sm text-text-muted hover:text-text"
+          >
             Screenshots
-          </a>
+          </SectionLink>
           <NavLink to="/security" className={navLinkClass}>
             Security
           </NavLink>
@@ -42,7 +52,7 @@ export function Header() {
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <NavLink
             to="/security"
-            className={securityIconClass}
+            className={cn(securityIconClass, "sm:hidden")}
             aria-label="Security"
             title="Security"
           >

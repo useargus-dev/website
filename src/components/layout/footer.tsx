@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { LINKS } from "@/constants/links";
+import { SectionLink } from "@/components/layout/section-link";
 import { Brand } from "@/components/ui/brand";
 
 export function Footer() {
@@ -21,22 +22,28 @@ export function Footer() {
               </p>
               <ul className="mt-3 space-y-2 text-sm">
                 <li>
-                  <a href="/#features" className="text-text-muted hover:text-text">
+                  <SectionLink
+                    sectionId="features"
+                    className="text-text-muted hover:text-text"
+                  >
                     Features
-                  </a>
+                  </SectionLink>
                 </li>
                 <li>
-                  <a
-                    href="/#how-it-works"
+                  <SectionLink
+                    sectionId="how-it-works"
                     className="text-text-muted hover:text-text"
                   >
                     How it works
-                  </a>
+                  </SectionLink>
                 </li>
                 <li>
-                  <a href="/#screenshots" className="text-text-muted hover:text-text">
+                  <SectionLink
+                    sectionId="screenshots"
+                    className="text-text-muted hover:text-text"
+                  >
                     Screenshots
-                  </a>
+                  </SectionLink>
                 </li>
                 <li>
                   <a
