@@ -32,6 +32,9 @@ export function Header() {
           <a href="/#how-it-works" className="text-sm text-text-muted hover:text-text">
             How it works
           </a>
+          <a href="/#screenshots" className="text-sm text-text-muted hover:text-text">
+            Screenshots
+          </a>
           <NavLink to="/security" className={navLinkClass}>
             Security
           </NavLink>

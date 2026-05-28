@@ -1,3 +1,4 @@
+import { AppScreenshots } from "@/components/marketing/app-screenshots";
 import { CtaSection } from "@/components/marketing/cta-section";
 import { Features } from "@/components/marketing/features";
 import { Hero } from "@/components/marketing/hero";
@@ -11,6 +12,7 @@ export function HomePage() {
       <ProductTiers />
       <Features />
       <HowItWorks />
+      <AppScreenshots />
       <CtaSection />
     </>
   );

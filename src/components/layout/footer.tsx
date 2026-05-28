@@ -34,6 +34,11 @@ export function Footer() {
                   </a>
                 </li>
                 <li>
+                  <a href="/#screenshots" className="text-text-muted hover:text-text">
+                    Screenshots
+                  </a>
+                </li>
+                <li>
                   <a
                     href={LINKS.releases}
                     target="_blank"
