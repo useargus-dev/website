@@ -6,7 +6,7 @@ import { AppScreenPreview } from "./app-screen-preview";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-border">
+    <section className="relative overflow-x-clip border-b border-border">
       <div
         className="pointer-events-none absolute inset-0 opacity-40 dark:opacity-25"
         style={{
@@ -14,9 +14,9 @@ export function Hero() {
             "radial-gradient(ellipse 80% 50% at 50% -20%, color-mix(in oklab, var(--signal) 25%, transparent), transparent)",
         }}
       />
-      <div className="relative mx-auto grid max-w-6xl gap-12 px-5 py-16 lg:grid-cols-2 lg:items-center lg:py-24">
+      <div className="relative mx-auto grid w-full max-w-6xl min-w-0 gap-12 px-4 py-16 sm:px-5 lg:grid-cols-2 lg:items-center lg:py-24">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
@@ -58,10 +58,10 @@ export function Hero() {
           </p>
         </motion.div>
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="lg:justify-self-end"
+          className="flex w-full min-w-0 justify-center pb-6 lg:justify-end"
         >
           <AppScreenPreview autoPlay />
         </motion.div>

@@ -3,7 +3,7 @@ import { AUTH_SCOPES } from "@/constants/security";
 
 export function AuthScopes() {
   return (
-    <div className="overflow-x-auto rounded-xl border border-border">
+    <div className="max-w-full overflow-x-auto rounded-xl border border-border">
       <table className="w-full min-w-[520px] text-left text-sm">
         <thead>
           <tr className="border-b border-border bg-surface-raised text-xs uppercase tracking-wider text-text-muted">

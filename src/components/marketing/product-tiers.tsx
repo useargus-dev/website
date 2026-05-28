@@ -14,7 +14,7 @@ const openSourceFeatures = [
 export function ProductTiers() {
   return (
     <section className="border-b border-border bg-surface-muted/50 py-20">
-      <div className="mx-auto max-w-6xl px-5">
+      <div className="mx-auto w-full max-w-6xl min-w-0 px-4 sm:px-5">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -17,7 +17,7 @@ export function HowItWorks() {
 
   return (
     <section id="how-it-works" className="border-y border-border py-20">
-      <div className="mx-auto max-w-6xl px-5">
+      <div className="mx-auto w-full max-w-6xl min-w-0 px-4 sm:px-5">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -33,8 +33,8 @@ export function HowItWorks() {
           </p>
         </motion.div>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:items-start">
-          <div>
+        <div className="mt-14 grid min-w-0 gap-12 lg:grid-cols-2 lg:items-start">
+          <div className="min-w-0">
             <div className="mb-4 h-1 overflow-hidden rounded-full bg-surface-raised">
               <motion.div
                 className="h-full rounded-full bg-signal"
@@ -108,13 +108,17 @@ export function HowItWorks() {
           </div>
 
           <motion.div
-            layout
-            className="sticky top-24 flex flex-col items-center gap-3 lg:items-end"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex w-full min-w-0 flex-col items-center gap-3 pb-6 lg:sticky lg:top-24"
           >
-            <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
+            <p className="w-full text-center text-xs font-medium uppercase tracking-wider text-text-muted">
               Step {activeIndex + 1} of {HOW_IT_WORKS_STEPS.length}
             </p>
-            <AppScreenPreview activeStepId={activeId} />
+            <div className="flex w-full min-w-0 justify-center">
+              <AppScreenPreview activeStepId={activeId} />
+            </div>
           </motion.div>
         </div>
       </div>

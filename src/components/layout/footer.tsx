@@ -5,7 +5,7 @@ import { Brand } from "@/components/ui/brand";
 export function Footer() {
   return (
     <footer className="border-t border-border bg-surface">
-      <div className="mx-auto max-w-6xl px-5 py-12">
+      <div className="mx-auto w-full max-w-6xl min-w-0 px-4 py-12 sm:px-5">
         <div className="flex flex-col gap-10 sm:flex-row sm:justify-between">
           <div className="max-w-sm">
             <Brand />

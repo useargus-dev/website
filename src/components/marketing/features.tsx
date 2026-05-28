@@ -4,7 +4,7 @@ import { FEATURES } from "@/constants/features";
 export function Features() {
   return (
     <section id="features" className="py-20">
-      <div className="mx-auto max-w-6xl px-5">
+      <div className="mx-auto w-full max-w-6xl min-w-0 px-4 sm:px-5">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -27,7 +27,7 @@ export function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.35, delay: i * 0.05 }}
-              className="rounded-xl border border-border bg-surface p-6 shadow-subtle transition-colors hover:border-signal/30"
+              className="min-w-0 rounded-xl border border-border bg-surface p-6 shadow-subtle transition-colors hover:border-signal/30"
             >
               <div
                 className="mb-4 grid size-10 place-items-center rounded-md border"

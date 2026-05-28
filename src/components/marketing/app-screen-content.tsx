@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { motion } from "motion/react";
 import { Check, KeyRound, Lock, Shield } from "lucide-react";
 import type { HowItWorksStep } from "@/constants/how-it-works";
+import { cn } from "@/lib/cn";
 
 function ScreenChrome({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -37,18 +38,20 @@ function UnlockScreen() {
         </motion.div>
         <p className="text-sm font-medium text-text">Unlock the app</p>
         <p className="mt-1 text-xs text-text-muted">Password + TOTP</p>
-        <div className="mt-4 w-full max-w-[200px] space-y-2">
+        <div className="mt-4 w-full max-w-[200px] space-y-2 overflow-hidden">
           <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: "100%" }}
+            initial={{ opacity: 0, scaleX: 0.92 }}
+            animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.15, duration: 0.3 }}
-            className="h-8 rounded-md border border-border bg-surface-raised"
+            style={{ transformOrigin: "center center" }}
+            className="h-8 w-full rounded-md border border-border bg-surface-raised"
           />
           <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: "100%" }}
+            initial={{ opacity: 0, scaleX: 0.92 }}
+            animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.25, duration: 0.3 }}
-            className="h-8 rounded-md border border-border bg-surface-raised"
+            style={{ transformOrigin: "center center" }}
+            className="h-8 w-full rounded-md border border-border bg-surface-raised"
           />
           <motion.div
             initial={{ opacity: 0, y: 4 }}
@@ -168,7 +171,7 @@ function EnvScreen() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.35 }}
-        className="font-mono text-[10px] leading-relaxed text-text-muted"
+        className="break-all font-mono text-[10px] leading-relaxed text-text-muted"
       >
         <span className="text-text-muted"># Local project env</span>
         {"\n"}
@@ -190,7 +193,7 @@ function RunScreen() {
       <motion.pre
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="font-mono text-[10px] text-text-muted"
+        className="break-all font-mono text-[10px] text-text-muted"
       >
         <motion.span
           initial={{ opacity: 0 }}
@@ -235,7 +238,7 @@ function ApproveScreen() {
           <Shield size={14} className="text-signal" />
           <p className="text-xs font-medium text-text">api-service</p>
         </div>
-        <p className="mt-2 font-mono text-[9px] leading-snug text-text-muted">
+        <p className="mt-2 break-all font-mono text-[9px] leading-snug text-text-muted">
           /usr/local/bin/node
           {"\n"}
           …/my-app/node_modules/.bin/vite
@@ -282,10 +285,24 @@ export function AppScreenContent({ stepId }: { stepId: HowItWorksStep["id"] }) {
   return <Screen />;
 }
 
-export function AppScreenShell({ children }: { children: ReactNode }) {
+export function AppScreenShell({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <div className="w-full max-w-md overflow-hidden rounded-xl border border-border bg-surface shadow-subtle">
-      <div className="aspect-[4/3] min-h-[280px]">{children}</div>
+    <div
+      className={cn(
+        "mx-auto w-full min-w-0 max-w-sm shrink-0 rounded-xl shadow-subtle sm:max-w-md",
+        className
+      )}
+    >
+      {/* Shadow on outer; overflow-hidden on inner so drop shadow is not clipped */}
+      <div className="overflow-hidden rounded-xl border border-border bg-surface">
+        <div className="w-full min-h-[280px]">{children}</div>
+      </div>
     </div>
   );
 }

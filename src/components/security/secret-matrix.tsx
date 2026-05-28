@@ -16,7 +16,7 @@ function Cell({ value }: { value: boolean | string }) {
 
 export function SecretMatrix() {
   return (
-    <div className="overflow-x-auto rounded-xl border border-border">
+    <div className="max-w-full overflow-x-auto rounded-xl border border-border">
       <table className="w-full min-w-[480px] text-sm">
         <thead>
           <tr className="border-b border-border bg-surface-raised text-xs uppercase tracking-wider text-text-muted">

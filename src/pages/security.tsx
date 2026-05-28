@@ -14,7 +14,7 @@ import { TrustLayers } from "@/components/security/trust-layers";
 
 export function SecurityPage() {
   return (
-    <div className="mx-auto max-w-4xl px-5 py-12 lg:py-16">
+    <div className="mx-auto w-full max-w-4xl min-w-0 px-4 py-12 sm:px-5 lg:py-16">
       <motion.header
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}

@@ -12,7 +12,7 @@ export function CtaSection() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="mx-auto max-w-6xl px-5"
+        className="mx-auto w-full max-w-6xl min-w-0 px-4 sm:px-5"
       >
         <div className="rounded-2xl border border-border bg-surface-muted px-8 py-12 text-center shadow-subtle sm:px-12">
           <h2 className="text-2xl font-semibold tracking-tight text-text sm:text-3xl">

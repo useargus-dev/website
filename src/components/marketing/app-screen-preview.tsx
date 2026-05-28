@@ -6,17 +6,18 @@ import {
   AppScreenContent,
   AppScreenShell,
 } from "./app-screen-content";
-
 type AppScreenPreviewProps = {
   activeStepId?: HowItWorksStep["id"];
   autoPlay?: boolean;
   intervalMs?: number;
+  className?: string;
 };
 
 export function AppScreenPreview({
   activeStepId: controlledStepId,
   autoPlay = false,
   intervalMs = 3500,
+  className,
 }: AppScreenPreviewProps) {
   const [internalStep, setInternalStep] = useState(0);
   const stepIndex = controlledStepId
@@ -34,7 +35,7 @@ export function AppScreenPreview({
   }, [autoPlay, controlledStepId, intervalMs]);
 
   return (
-    <AppScreenShell>
+    <AppScreenShell className={className}>
       <AnimatePresence mode="wait">
         <motion.div
           key={step.id}
@@ -42,7 +43,8 @@ export function AppScreenPreview({
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -8, scale: 0.98 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="h-full"
+          style={{ transformOrigin: "center center" }}
+          className="h-full w-full"
         >
           <AppScreenContent stepId={step.id} />
         </motion.div>
