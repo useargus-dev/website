@@ -2,24 +2,16 @@ import {
   Fingerprint,
   KeyRound,
   Lock,
+  LogOut,
   ShieldCheck,
   Timer,
   type LucideIcon,
 } from "lucide-react";
-import type { ComponentType, CSSProperties } from "react";
-
-import { AppLogo } from "@/components/ui/app-logo";
-
-export type FeatureIconProps = {
-  size?: number;
-  style?: CSSProperties;
-  className?: string;
-};
 
 export type Feature = {
   title: string;
   description: string;
-  icon: LucideIcon | ComponentType<FeatureIconProps>;
+  icon: LucideIcon;
 };
 
 export const FEATURES: Feature[] = [
@@ -54,8 +46,9 @@ export const FEATURES: Feature[] = [
       "Approve or deny from a compact popup while your main window stays closed.",
   },
   {
-    icon: AppLogo,
-    title: "Fail secure",
-    description: "Sign out tears down the socket and zeroizes keys in the Rust core.",
+    icon: LogOut,
+    title: "Secure sign-out",
+    description:
+      "Sign out stops local IPC and clears encryption keys from memory. Use it when you leave a shared machine.",
   },
 ];
