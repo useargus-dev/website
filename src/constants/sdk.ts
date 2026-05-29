@@ -7,17 +7,25 @@ export type SdkCodeBlock = {
   code: string;
 };
 
+export type SdkPackageLink = {
+  name: string;
+  registry: string;
+  url: string;
+};
+
 export type SdkLanguage = {
   id: SdkLanguageId;
   label: string;
   status: SdkLanguageStatus;
   install?: string;
-  npmPackage?: string;
+  packageLink?: SdkPackageLink;
+  sourceRepoUrl?: string;
   summary: string;
   blocks: SdkCodeBlock[];
 };
 
-const ENV_LOADED_COMMENT = "// process.env.<KEY_FROM_BUCKET> is set";
+const ENV_LOADED_COMMENT_NODE = "// process.env.<KEY_FROM_BUCKET> is set";
+const ENV_LOADED_COMMENT_PYTHON = '# os.environ["<KEY_FROM_BUCKET>"] is set';
 
 export const SDK_LANGUAGES: SdkLanguage[] = [
   {
@@ -25,7 +33,12 @@ export const SDK_LANGUAGES: SdkLanguage[] = [
     label: "Node.js",
     status: "available",
     install: "npm install @useargus/node",
-    npmPackage: "@useargus/node",
+    packageLink: {
+      name: "@useargus/node",
+      registry: "npm",
+      url: "https://www.npmjs.com/package/@useargus/node",
+    },
+    sourceRepoUrl: "https://github.com/useargus-dev/node-argus",
     summary:
       "Load bucket secrets into process.env before your app starts. Supports ESM and CommonJS.",
     blocks: [
@@ -42,32 +55,55 @@ ARGUS_BUCKET_TOKEN=tok_...
         code: `import { loadEnv } from "@useargus/node";
 
 await loadEnv();
-${ENV_LOADED_COMMENT}`,
+${ENV_LOADED_COMMENT_NODE}`,
       },
       {
         label: "CommonJS",
         code: `const { loadEnv } = require("@useargus/node");
 
 await loadEnv();
-${ENV_LOADED_COMMENT}`,
+${ENV_LOADED_COMMENT_NODE}`,
       },
     ],
   },
   {
     id: "python",
     label: "Python",
-    status: "development",
+    status: "available",
+    install: "pip install useargus",
+    packageLink: {
+      name: "useargus",
+      registry: "PyPI",
+      url: "https://pypi.org/project/useargus/",
+    },
+    sourceRepoUrl: "https://github.com/useargus-dev/py-argus",
     summary:
-      "Planned package with load_env() mirroring the Node contract — IPC, .env merge, and approval flow.",
+      "Load bucket secrets into os.environ before your app starts — same IPC contract and .env merge as Node.",
     blocks: [
       {
-        label: "Planned usage",
-        code: `# pip install argus-secrets  (not published yet)
+        label: "Project .env",
+        code: `ARGUS_BUCKET_ID=550e8400-e29b-41d4-a716-446655440000
+ARGUS_BUCKET_TOKEN=tok_...
 
-from argus_secrets import load_env
+# Optional local override (wins over bucket for same key)
+# API_BASE_URL=http://localhost:3000`,
+      },
+      {
+        label: "Usage",
+        code: `from useargus import load_env
 
 load_env()
-# os.environ["<KEY_FROM_BUCKET>"] is set`,
+${ENV_LOADED_COMMENT_PYTHON}`,
+      },
+      {
+        label: "Migration from python-dotenv",
+        code: `# Before
+from dotenv import load_dotenv
+load_dotenv()
+
+# After
+from useargus import load_env
+load_env()`,
       },
     ],
   },

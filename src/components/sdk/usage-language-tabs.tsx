@@ -22,7 +22,7 @@ function StatusBadge({ status }: { status: "available" | "development" }) {
 
 type UsageLanguageTabsProps = {
   defaultLanguage?: SdkLanguageId;
-  /** Teaser on home: summary, install, npm link only. Usage page: full code samples. */
+  /** Teaser on home: summary, install, registry link only. Usage page: full code samples. */
   variant?: "compact" | "full";
 };
 
@@ -80,14 +80,14 @@ export function UsageLanguageTabs({
         {active.install ? (
           <div className={cn("mt-4", isCompact && "space-y-3")}>
             <CodeBlock label="Install" code={active.install} />
-            {active.npmPackage ? (
+            {active.packageLink ? (
               <a
-                href={LINKS.npmNode}
+                href={active.packageLink.url}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1 text-sm font-medium text-signal hover:underline"
               >
-                {active.npmPackage} on npm
+                {active.packageLink.name} on {active.packageLink.registry}
                 <ExternalLink size={14} />
               </a>
             ) : null}
@@ -119,9 +119,9 @@ export function UsageLanguageTabs({
                 </code>{" "}
                 in the desktop repo.
               </p>
-            ) : (
+            ) : active.sourceRepoUrl ? (
               <a
-                href={LINKS.nodeSdkRepo}
+                href={active.sourceRepoUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-signal hover:underline"
@@ -129,7 +129,7 @@ export function UsageLanguageTabs({
                 Source on GitHub
                 <ExternalLink size={14} />
               </a>
-            )}
+            ) : null}
           </>
         ) : null}
       </div>

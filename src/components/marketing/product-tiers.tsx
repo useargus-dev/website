@@ -15,9 +15,9 @@ const desktopFeatures = [
 
 const integrationFeatures = [
   "npm install @useargus/node",
-  "loadEnv() — dotenv-style, secrets from Argus",
-  "ESM and CommonJS",
-  "Python, Go, Ruby, Java clients in development",
+  "pip install useargus",
+  "loadEnv() / load_env() — dotenv-style, secrets from Argus",
+  "Go, Ruby, and Java clients in development",
 ];
 
 export function ProductTiers() {

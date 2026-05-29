@@ -22,7 +22,7 @@ export function UsageTeaser() {
             Drop-in SDKs for your stack
           </h2>
           <p className="mt-4 text-lg text-text-muted">
-            Node.js is available on npm today. Python, Go, Ruby, and Java clients
+            Node.js and Python are on npm and PyPI today. Go, Ruby, and Java clients
             share the same IPC contract and are under active development.
           </p>
           <Link
