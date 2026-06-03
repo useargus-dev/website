@@ -109,6 +109,14 @@ export function Footer() {
                     GitHub
                   </a>
                 </li>
+                <li>
+                  <a
+                    href={LINKS.contactEmail}
+                    className="break-all text-text-muted hover:text-text"
+                  >
+                    ssamuel.sushant@gmail.com
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
