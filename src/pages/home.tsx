@@ -6,6 +6,7 @@ import { Features } from "@/components/marketing/features";
 import { Hero } from "@/components/marketing/hero";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { ProductTiers } from "@/components/marketing/product-tiers";
+import { EcosystemStats } from "@/components/marketing/ecosystem-stats";
 import { UsageTeaser } from "@/components/marketing/usage-teaser";
 import { scrollToSectionWhenReady } from "@/lib/scroll-to-section";
 
@@ -27,6 +28,7 @@ export function HomePage() {
   return (
     <>
       <Hero />
+      <EcosystemStats />
       <ProductTiers />
       <Features />
       <HowItWorks />

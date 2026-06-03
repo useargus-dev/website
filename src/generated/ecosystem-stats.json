@@ -1,0 +1,51 @@
+{
+  "fetchedAt": "2026-06-03T11:57:21.051Z",
+  "github": {
+    "releaseDownloads": 19,
+    "latestVersion": "v0.2.0",
+    "versionGroups": [
+      {
+        "label": "v0.2.x",
+        "downloads": 0,
+        "firstReleasedAt": "2026-06-03",
+        "lastReleasedAt": "2026-06-03",
+        "releases": [
+          {
+            "tag": "v0.2.0",
+            "publishedAt": "2026-06-03T11:27:17Z",
+            "downloads": 0
+          }
+        ]
+      },
+      {
+        "label": "v0.1.x",
+        "downloads": 19,
+        "firstReleasedAt": "2026-05-28",
+        "lastReleasedAt": "2026-05-29",
+        "releases": [
+          {
+            "tag": "v0.1.1",
+            "publishedAt": "2026-05-29T19:31:10Z",
+            "downloads": 17
+          },
+          {
+            "tag": "v0.1.0",
+            "publishedAt": "2026-05-28T04:09:10Z",
+            "downloads": 2
+          }
+        ]
+      }
+    ],
+    "href": "https://github.com/useargus-dev/argus/releases"
+  },
+  "npm": {
+    "downloadsLastMonth": 85,
+    "package": "@useargus/node",
+    "href": "https://www.npmjs.com/package/@useargus/node"
+  },
+  "pypi": {
+    "downloadsLast30Days": 152,
+    "package": "useargus",
+    "href": "https://pypi.org/project/useargus/"
+  }
+}
