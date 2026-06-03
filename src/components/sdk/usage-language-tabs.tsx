@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { ExternalLink } from "lucide-react";
-import { SDK_LANGUAGES, type SdkLanguageId } from "@/constants/sdk";
+import {
+  SDK_LANGUAGES,
+  type SdkLanguageId,
+} from "@/constants/sdk";
+import { USAGE_GUIDES } from "@/constants/usage-guide";
 import { LINKS } from "@/constants/links";
 import { CodeBlock } from "@/components/sdk/code-block";
-import { SdkUsageAccordion } from "@/components/sdk/sdk-usage-accordion";
+import { UsageStepGuide } from "@/components/sdk/usage-step-guide";
 import { cn } from "@/lib/cn";
 
 function StatusBadge({ status }: { status: "available" | "development" }) {
@@ -23,7 +27,7 @@ function StatusBadge({ status }: { status: "available" | "development" }) {
 
 type UsageLanguageTabsProps = {
   defaultLanguage?: SdkLanguageId;
-  /** Teaser on home: summary, install, registry link only. Usage page: full code samples. */
+  /** Teaser on home: summary, install, registry link only. Usage page: full step guide. */
   variant?: "compact" | "full";
 };
 
@@ -34,13 +38,17 @@ export function UsageLanguageTabs({
   const [activeId, setActiveId] = useState<SdkLanguageId>(defaultLanguage);
   const active = SDK_LANGUAGES.find((l) => l.id === activeId) ?? SDK_LANGUAGES[0];
   const isCompact = variant === "compact";
+  const guide =
+    active.status === "available" && (active.id === "node" || active.id === "python")
+      ? USAGE_GUIDES[active.id]
+      : null;
 
   return (
     <div className="min-w-0">
       <div
         role="tablist"
         aria-label="Client library language"
-        className="flex gap-1 overflow-x-auto border-b border-border pb-px"
+        className="flex gap-6 overflow-x-auto border-b border-border"
       >
         {SDK_LANGUAGES.map((lang) => {
           const selected = lang.id === activeId;
@@ -52,10 +60,10 @@ export function UsageLanguageTabs({
               aria-selected={selected}
               onClick={() => setActiveId(lang.id)}
               className={cn(
-                "shrink-0 rounded-t-md border px-3 py-2 text-sm font-medium transition-colors",
+                "shrink-0 border-b-2 pb-3 pt-1 text-sm font-medium transition-colors",
                 selected
-                  ? "border-border border-b-transparent bg-surface text-text"
-                  : "border-transparent text-text-muted hover:text-text",
+                  ? "border-text text-text"
+                  : "border-transparent text-text-muted hover:border-border hover:text-text",
               )}
             >
               {lang.label}
@@ -64,23 +72,27 @@ export function UsageLanguageTabs({
         })}
       </div>
 
-      <div
-        role="tabpanel"
-        className="rounded-b-xl border border-t-0 border-border bg-surface p-5 sm:p-6"
-      >
+      <div role="tabpanel" className="pt-8">
         <div className="flex flex-wrap items-center gap-2">
           {!isCompact ? (
-            <h3 className="text-lg font-semibold text-text">{active.label}</h3>
+            <h2 className="text-xl font-semibold tracking-tight text-text">
+              {active.label}
+            </h2>
           ) : null}
           <StatusBadge status={active.status} />
         </div>
-        <p className="mt-2 text-sm leading-relaxed text-text-muted">
-          {active.summary}
-        </p>
+
+        {isCompact ? (
+          <p className="mt-2 text-sm leading-relaxed text-text-muted">
+            {active.summary}
+          </p>
+        ) : null}
 
         {active.install ? (
           <div className={cn("mt-4", isCompact && "space-y-3")}>
-            <CodeBlock label="Install" code={active.install} />
+            {isCompact ? (
+              <CodeBlock label="Install" code={active.install} />
+            ) : null}
             {active.packageLink ? (
               <a
                 href={active.packageLink.url}
@@ -97,10 +109,15 @@ export function UsageLanguageTabs({
 
         {!isCompact ? (
           <>
-            {active.usageSections && active.usageSections.length > 0 ? (
-              <SdkUsageAccordion sections={active.usageSections} />
+            {guide ? (
+              <div className="mt-6">
+                <UsageStepGuide guide={guide} />
+              </div>
             ) : (
-              <div className="mt-5 space-y-5">
+              <div className="mt-6 space-y-5">
+                <p className="text-sm leading-relaxed text-text-muted">
+                  {active.summary}
+                </p>
                 {active.blocks.map((block) => (
                   <CodeBlock key={block.label} label={block.label} code={block.code} />
                 ))}
@@ -108,7 +125,7 @@ export function UsageLanguageTabs({
             )}
 
             {active.status === "development" ? (
-              <p className="mt-5 text-sm text-text-muted">
+              <p className="mt-8 text-sm text-text-muted">
                 This library is not published yet. The IPC protocol is stable — see{" "}
                 <a
                   href={LINKS.clientLibrariesDocs}
@@ -129,9 +146,9 @@ export function UsageLanguageTabs({
                 href={active.sourceRepoUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-signal hover:underline"
+                className="mt-8 inline-flex items-center gap-1 text-sm font-medium text-signal hover:underline"
               >
-                Source on GitHub
+                Full docs on GitHub
                 <ExternalLink size={14} />
               </a>
             ) : null}

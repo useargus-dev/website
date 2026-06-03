@@ -171,12 +171,6 @@ export const OUT_OF_SCOPE = [
       "When Argus Proxy is off, real secret values land in os.environ / process.env. Argus controls when values are provided, not the client's runtime after injection.",
   },
   {
-    id: "O3b",
-    threat: "Client memory after proxy rewrite",
-    reason:
-      "Argus Proxy reduces exposure of real keys in env vars (placeholders only), but the client library and upstream request still handle plaintext after MITM rewrite. Memory scraping of the app process remains out of scope.",
-  },
-  {
     id: "O4",
     threat: "Physical access while vault is unlocked",
     reason:
@@ -184,18 +178,6 @@ export const OUT_OF_SCOPE = [
   },
   {
     id: "O5",
-    threat: "Local MITM CA trust",
-    reason:
-      "Argus Proxy installs a local CA (~/.argus/ca-bundle.pem). You must trust it for proxy-enabled HTTP clients. Compromise of the Argus CA material on disk could enable forged TLS for allowed hosts.",
-  },
-  {
-    id: "O6",
-    threat: "Plaintext metadata in encrypted DB",
-    reason:
-      "Secret names, tags, audit metadata, and env labels are searchable plaintext inside the SQLCipher file. Only value payloads use AES-GCM field encryption.",
-  },
-  {
-    id: "O7",
     threat: "Lost master password without recovery code",
     reason:
       "The vault cannot be decrypted without the master password or the one-time recovery code shown at registration. Argus cannot recover either.",
@@ -203,11 +185,8 @@ export const OUT_OF_SCOPE = [
 ] as const;
 
 export const KNOWN_LIMITATIONS = [
-  "Append-only audit log is partial — not every UI action is recorded yet.",
   "OS screen lock → app lock integration is planned but not wired in v0.2.",
   "gRPC and database drivers are not proxied — HTTP(S) only for Argus Proxy.",
-  "Recovery code is shown once at registration; there is no in-app reveal later.",
-  "Master password change is only via recovery flow today — not Settings.",
 ] as const;
 
 export const PROXY_DETAILS = {

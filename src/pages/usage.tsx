@@ -5,7 +5,7 @@ import { SDK_SHARED_NOTES } from "@/constants/sdk";
 
 export function UsagePage() {
   return (
-    <div className="mx-auto w-full max-w-4xl min-w-0 px-4 py-12 sm:px-5 lg:py-16">
+    <div className="mx-auto w-full max-w-6xl min-w-0 px-4 py-12 sm:px-6 lg:py-16">
       <motion.header
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -18,11 +18,11 @@ export function UsagePage() {
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-text sm:text-4xl">
           Client libraries
         </h1>
-        <p className="mt-4 leading-relaxed text-text-muted">
-          Official client libraries load secrets from Argus over local IPC into
-          your process environment — similar to dotenv, but values come from your
-          encrypted bucket when the desktop app is signed in. When Argus Proxy
-          is enabled on a bucket, use the per-library factories documented below.
+        <p className="mt-4 max-w-3xl leading-relaxed text-text-muted">
+          Official client libraries load secrets from Argus over local IPC — similar
+          to dotenv, but values come from your encrypted bucket when the desktop app
+          is signed in. Follow the steps below to install, load env, and wire Argus
+          Proxy for your HTTP client.
         </p>
       </motion.header>
 
