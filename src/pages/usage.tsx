@@ -21,7 +21,8 @@ export function UsagePage() {
         <p className="mt-4 leading-relaxed text-text-muted">
           Official client libraries load secrets from Argus over local IPC into
           your process environment — similar to dotenv, but values come from your
-          encrypted bucket when the desktop app is signed in.
+          encrypted bucket when the desktop app is signed in. When Argus Proxy
+          is enabled on a bucket, use the per-library factories documented below.
         </p>
       </motion.header>
 

@@ -22,14 +22,14 @@ export function Hero() {
         >
           <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface-muted px-3 py-1 text-xs font-medium text-signal">
             <span className="size-1.5 rounded-full bg-signal" />
-            Open source · local-first
+            Open source · privacy-first
           </p>
           <h1 className="text-balance text-4xl font-semibold tracking-tight text-text sm:text-5xl lg:text-6xl">
             Secrets stay on your machine.{" "}
             <span className="text-signal">You approve every access.</span>
           </h1>
           <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-text-muted">
-            Argus is a developer secrets vault with app buckets and local IPC.
+            Argus is a privacy-first developer secrets vault with app buckets and local IPC.
             Map env vars to encrypted storage, add a bucket ID and token to your
             project env, and grant access when a real process asks.
           </p>

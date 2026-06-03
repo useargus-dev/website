@@ -25,11 +25,11 @@ export function HowItWorks() {
           className="text-center"
         >
           <h2 className="text-3xl font-semibold tracking-tight text-text sm:text-4xl">
-            From vault to bucket to approval
+            From vault to bucket to proxy to approval
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-text-muted">
-            Seven steps from unlock to running your app. Secret values stay in
-            Argus — your project env only needs a bucket ID and token.
+            Eight steps from unlock to running your app. Optionally enable proxy
+            injection so real API keys never sit in process memory.
           </p>
         </motion.div>
 

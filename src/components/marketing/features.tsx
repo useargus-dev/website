@@ -12,10 +12,10 @@ export function Features() {
           className="max-w-2xl"
         >
           <h2 className="text-3xl font-semibold tracking-tight text-text sm:text-4xl">
-            Everything runs locally
+            Privacy-first by design
           </h2>
           <p className="mt-4 text-lg text-text-muted">
-            No cloud vault API. Your Rust core owns crypto, the database, and the socket.
+            No cloud vault API. Your Rust core owns crypto, the database, and the socket on your machine.
           </p>
         </motion.div>
 

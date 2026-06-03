@@ -142,6 +142,13 @@ export const IN_SCOPE_THREATS = [
     detail:
       "credential, recovery_codes, ssh_key, certificate, and note types cannot be injected via IPC even if the UI were bypassed.",
   },
+  {
+    id: "T9",
+    threat: "Placeholder leaked without active grant",
+    mitigation: "Proxy CONNECT requires client token + grant + allowed domain.",
+    detail:
+      "With Argus Proxy enabled, env vars hold argus-proxy-* placeholders — not real secrets. MITM rewrite only runs after Proxy-Authorization, an active client_grants row for the connecting PID, and a host allowed by the mapping.",
+  },
 ] as const;
 
 export const OUT_OF_SCOPE = [
@@ -159,9 +166,15 @@ export const OUT_OF_SCOPE = [
   },
   {
     id: "O3",
-    threat: "Malware after env access",
+    threat: "Malware after env access (non-proxy mappings)",
     reason:
-      "Once secrets are in os.environ, the client application owns them. Argus controls when values are provided, not the client's runtime.",
+      "When Argus Proxy is off, real secret values land in os.environ / process.env. Argus controls when values are provided, not the client's runtime after injection.",
+  },
+  {
+    id: "O3b",
+    threat: "Client memory after proxy rewrite",
+    reason:
+      "Argus Proxy reduces exposure of real keys in env vars (placeholders only), but the client library and upstream request still handle plaintext after MITM rewrite. Memory scraping of the app process remains out of scope.",
   },
   {
     id: "O4",
@@ -169,7 +182,54 @@ export const OUT_OF_SCOPE = [
     reason:
       "db_key and decrypted buffers exist in RAM while signed in. Use OS screen lock, short TTLs, and sign out on shared machines.",
   },
+  {
+    id: "O5",
+    threat: "Local MITM CA trust",
+    reason:
+      "Argus Proxy installs a local CA (~/.argus/ca-bundle.pem). You must trust it for proxy-enabled HTTP clients. Compromise of the Argus CA material on disk could enable forged TLS for allowed hosts.",
+  },
+  {
+    id: "O6",
+    threat: "Plaintext metadata in encrypted DB",
+    reason:
+      "Secret names, tags, audit metadata, and env labels are searchable plaintext inside the SQLCipher file. Only value payloads use AES-GCM field encryption.",
+  },
+  {
+    id: "O7",
+    threat: "Lost master password without recovery code",
+    reason:
+      "The vault cannot be decrypted without the master password or the one-time recovery code shown at registration. Argus cannot recover either.",
+  },
 ] as const;
+
+export const KNOWN_LIMITATIONS = [
+  "Append-only audit log is partial — not every UI action is recorded yet.",
+  "OS screen lock → app lock integration is planned but not wired in v0.2.",
+  "gRPC and database drivers are not proxied — HTTP(S) only for Argus Proxy.",
+  "Recovery code is shown once at registration; there is no in-app reveal later.",
+  "Master password change is only via recovery flow today — not Settings.",
+] as const;
+
+export const PROXY_DETAILS = {
+  loopback: [
+    "Per-bucket toggle binds 127.0.0.1 on ports 9000–9100",
+    "IPC ok response includes httpProxy, httpsProxy, noProxy, caBundlePath",
+    "SDK factories wire explicit client proxy + CA — no global env patches",
+    "Out of scope: gRPC, database drivers, non-HTTP protocols",
+  ],
+  placeholders: [
+    "Proxy-enabled mappings inject argus-proxy-* strings into env — never real keys",
+    "Real secrets are rewritten in headers/bodies at MITM time only",
+    "Per-mapping allowed domains (Allow all or Restrict with suffix match)",
+    "Empty restrict list blocks all hosts until domains are added",
+  ],
+  gate: [
+    "CONNECT validates Proxy-Authorization (bucket client token)",
+    "Requires active client_grants row for OS-verified peer PID",
+    "Host must match mapping allowlist — otherwise 403 Forbidden",
+    "Audit events: PROXY_REQUEST, PROXY_HOST_DENIED, PROXY_GRANT_DENIED",
+  ],
+} as const;
 
 export type CryptoLayer = {
   id: string;

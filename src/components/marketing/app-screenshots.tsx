@@ -48,7 +48,8 @@ export function AppScreenshots() {
             See the app
           </h2>
           <p className="mt-4 text-lg text-text-muted">
-            From first-time setup through vault, buckets, and approvals.
+            From setup through vault, buckets, proxy injection, and approvals — real
+            app captures.
           </p>
         </motion.div>
 

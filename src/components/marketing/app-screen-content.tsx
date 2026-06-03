@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { motion } from "motion/react";
-import { Check, KeyRound, Lock, Shield } from "lucide-react";
+import { Check, Globe, KeyRound, Lock, Shield } from "lucide-react";
 import type { HowItWorksStep } from "@/constants/how-it-works";
 import { cn } from "@/lib/cn";
 
@@ -164,6 +164,46 @@ function MappingsScreen() {
   );
 }
 
+function ProxyScreen() {
+  return (
+    <ScreenChrome title="Argus — Mapping details">
+      <p className="font-mono text-[10px] text-signal">ANTHROPIC_API_KEY</p>
+      <div className="mt-3 space-y-2">
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center justify-between rounded-md border border-border bg-surface-raised px-2.5 py-2"
+        >
+          <span className="text-[10px] font-medium text-text">Inject proxy token</span>
+          <span className="rounded-full bg-signal px-2 py-0.5 text-[9px] font-medium text-white">
+            On
+          </span>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="rounded-md border border-border bg-surface-raised px-2.5 py-2"
+        >
+          <p className="text-[9px] text-text-muted">Env value (placeholder)</p>
+          <p className="mt-1 break-all font-mono text-[10px] text-text">
+            argus-proxy-demoKey…
+          </p>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="flex items-center gap-1.5 text-[10px] text-text-muted"
+        >
+          <Globe size={11} className="text-signal" />
+          api.anthropic.com allowed
+        </motion.div>
+      </div>
+    </ScreenChrome>
+  );
+}
+
 function EnvScreen() {
   return (
     <ScreenChrome title=".env — your project">
@@ -181,7 +221,9 @@ function EnvScreen() {
         {"\n\n"}
         <span className="text-text-muted"># Not in env — stored in vault</span>
         {"\n"}
-        <span className="line-through opacity-40">STRIPE_SECRET_KEY=sk_live_…</span>
+        <span className="line-through opacity-40">ANTHROPIC_API_KEY=sk-ant-…</span>
+        {"\n"}
+        <span className="text-signal">ANTHROPIC_API_KEY</span>=argus-proxy-…
       </motion.pre>
     </ScreenChrome>
   );
@@ -208,8 +250,8 @@ function RunScreen() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.25 }}
         >
-          <span className="text-text-muted">→ connecting to </span>
-          <span className="text-signal">\\.\pipe\argus</span>
+          <span className="text-text-muted">→ placeholders via IPC · </span>
+          <span className="text-signal">127.0.0.1:9001</span>
         </motion.span>
         {"\n"}
         <motion.span
@@ -275,6 +317,7 @@ const SCREENS: Record<HowItWorksStep["id"], () => ReactNode> = {
   secrets: SecretsScreen,
   bucket: BucketScreen,
   mappings: MappingsScreen,
+  proxy: ProxyScreen,
   env: EnvScreen,
   run: RunScreen,
   approve: ApproveScreen,

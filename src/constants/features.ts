@@ -23,9 +23,9 @@ export const FEATURES: Feature[] = [
   },
   {
     icon: KeyRound,
-    title: "App buckets",
+    title: "App buckets + proxy",
     description:
-      "Map env variable names to vault secrets. Use ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN — not the values.",
+      "Map env names to vault secrets. Optionally enable Argus Proxy so clients get placeholders — real keys stay in Argus until HTTP rewrite.",
   },
   {
     icon: Fingerprint,

@@ -9,6 +9,7 @@ const desktopFeatures = [
   "Single-user desktop vault",
   "SQLCipher encrypted database",
   "App buckets + env mappings",
+  "Optional Argus Proxy (HTTP MITM)",
   "Local IPC with human approval",
   "System tray + requests window",
 ];
@@ -16,7 +17,7 @@ const desktopFeatures = [
 const integrationFeatures = [
   "npm install @useargus/node",
   "pip install useargus",
-  "loadEnv() / load_env() — dotenv-style, secrets from Argus",
+  "loadEnv() / load_env() — with or without proxy factories",
   "Go, Ruby, and Java clients in development",
 ];
 
@@ -35,9 +36,9 @@ export function ProductTiers() {
             Built for developers who own their keys
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-text-muted">
-            A local desktop vault on your machine — no cloud sync. Map env vars to
+            A privacy-first desktop vault on your machine — no cloud sync. Map env vars to
             secrets, approve each process, and load them from your app with client
-            libraries.
+            libraries — with optional HTTP proxy so keys never sit in process memory.
           </p>
         </motion.div>
 

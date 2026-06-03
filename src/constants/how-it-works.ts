@@ -9,7 +9,7 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     id: "unlock",
     title: "Unlock the app",
     description:
-      "Sign in with your password and TOTP or biometrics. Argus stays local — your vault never leaves the machine.",
+      "Sign in with your password and TOTP or biometrics. Your vault stays on your machine — no cloud sync.",
   },
   {
     id: "secrets",
@@ -27,19 +27,25 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     id: "mappings",
     title: "Map env names to secrets",
     description:
-      "Link STRIPE_SECRET_KEY to a vault entry. Your app keeps the same variable names — values stay in Argus.",
+      "Link ANTHROPIC_API_KEY to a vault entry. Your app keeps the same variable names — values stay in Argus.",
+  },
+  {
+    id: "proxy",
+    title: "Enable proxy injection (optional)",
+    description:
+      "Turn on Argus Proxy for the bucket, enable inject proxy token on a mapping, and set allowed domains. Env vars get argus-proxy-* placeholders instead of real keys.",
   },
   {
     id: "env",
     title: "Add bucket ID and token to project env",
     description:
-      "Set ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in your project .env or shell — not the secret values themselves.",
+      "Set ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in your project .env — not the secret values themselves.",
   },
   {
     id: "run",
     title: "Run your app",
     description:
-      "Your process connects over local IPC (named pipe or Unix socket). Argus resolves the real process identity.",
+      "loadEnv() / load_env() connects over local IPC. With proxy on, use SDK proxy helpers to wire your HTTP library.",
   },
   {
     id: "approve",

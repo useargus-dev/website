@@ -7,8 +7,9 @@ import { GoalsGrid } from "@/components/security/goals-grid";
 import { Hardening } from "@/components/security/hardening";
 import { IpcDetail } from "@/components/security/ipc-detail";
 import { Limitations } from "@/components/security/limitations";
-import { SecretMatrix } from "@/components/security/secret-matrix";
+import { ProxyDetail } from "@/components/security/proxy-detail";
 import { SecuritySection } from "@/components/security/section";
+import { SecretMatrix } from "@/components/security/secret-matrix";
 import { ThreatGrid } from "@/components/security/threat-grid";
 import { TrustLayers } from "@/components/security/trust-layers";
 
@@ -28,7 +29,7 @@ export function SecurityPage() {
           Security model
         </h1>
         <p className="mt-4 leading-relaxed text-text-muted">
-          Argus v0.1 is early software and has not been independently security-audited.
+          Argus v0.2 is early software and has not been independently security-audited.
           This page describes the design intent and controls implemented in the open
           source desktop app. For the full specification, parameter tables, and release
           checklist, see the repository.
@@ -106,6 +107,20 @@ export function SecurityPage() {
             stripped). IPC remains active while the app is locked — only sign-out stops
             the server. App lock requires TOTP or biometric; password is required at cold
             start sign-in.
+          </p>
+        </SecuritySection>
+
+        <SecuritySection
+          id="proxy"
+          title="Argus Proxy (HTTP MITM)"
+          description="Optional per-bucket loopback proxy that keeps real API keys out of process environment."
+        >
+          <ProxyDetail />
+          <p className="mt-6 text-sm leading-relaxed text-text-muted">
+            Enable proxy on a bucket, turn on inject proxy token per mapping, and set
+            allowed domains. Client libraries must use explicit factory helpers — loadEnv
+            alone does not configure global HTTP_PROXY. See Usage for Node.js and Python
+            examples with and without proxy.
           </p>
         </SecuritySection>
 

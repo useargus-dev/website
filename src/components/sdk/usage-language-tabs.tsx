@@ -3,6 +3,7 @@ import { ExternalLink } from "lucide-react";
 import { SDK_LANGUAGES, type SdkLanguageId } from "@/constants/sdk";
 import { LINKS } from "@/constants/links";
 import { CodeBlock } from "@/components/sdk/code-block";
+import { SdkUsageAccordion } from "@/components/sdk/sdk-usage-accordion";
 import { cn } from "@/lib/cn";
 
 function StatusBadge({ status }: { status: "available" | "development" }) {
@@ -96,11 +97,15 @@ export function UsageLanguageTabs({
 
         {!isCompact ? (
           <>
-            <div className="mt-5 space-y-5">
-              {active.blocks.map((block) => (
-                <CodeBlock key={block.label} label={block.label} code={block.code} />
-              ))}
-            </div>
+            {active.usageSections && active.usageSections.length > 0 ? (
+              <SdkUsageAccordion sections={active.usageSections} />
+            ) : (
+              <div className="mt-5 space-y-5">
+                {active.blocks.map((block) => (
+                  <CodeBlock key={block.label} label={block.label} code={block.code} />
+                ))}
+              </div>
+            )}
 
             {active.status === "development" ? (
               <p className="mt-5 text-sm text-text-muted">
