@@ -1,18 +1,18 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
-import { RoadmapPhaseCard } from "@/components/roadmap/phase-card";
+import { RoadmapTimeline } from "@/components/roadmap/roadmap-timeline";
 import { ROADMAP_PHASES } from "@/constants/roadmap";
 
 export function RoadmapPage() {
   const shippedPhases = ROADMAP_PHASES.filter((p) => p.shipped).length;
 
   return (
-    <div className="mx-auto w-full max-w-4xl min-w-0 px-4 py-12 sm:px-5 lg:py-16">
+    <div className="mx-auto w-full max-w-6xl min-w-0 px-4 py-12 sm:px-5 lg:py-16">
       <motion.header
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45 }}
-        className="mb-10 max-w-2xl"
+        className="mb-12 max-w-2xl mx-auto text-center md:mb-16"
       >
         <p className="text-xs font-medium uppercase tracking-wider text-signal">
           Product direction
@@ -34,11 +34,7 @@ export function RoadmapPage() {
         </p>
       </motion.header>
 
-      <div className="space-y-8">
-        {ROADMAP_PHASES.map((phase, index) => (
-          <RoadmapPhaseCard key={phase.id} phase={phase} index={index} />
-        ))}
-      </div>
+      <RoadmapTimeline phases={ROADMAP_PHASES} />
 
       <motion.div
         initial={{ opacity: 0 }}
