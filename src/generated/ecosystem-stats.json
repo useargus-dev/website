@@ -1,19 +1,19 @@
 {
-  "fetchedAt": "2026-06-05T14:51:41.498Z",
+  "fetchedAt": "2026-06-05T21:12:13.520Z",
   "github": {
-    "releaseDownloads": 21,
+    "releaseDownloads": 30,
     "latestVersion": "v0.2.1",
     "versionGroups": [
       {
         "label": "v0.2.x",
-        "downloads": 2,
+        "downloads": 9,
         "firstReleasedAt": "2026-06-03",
         "lastReleasedAt": "2026-06-03",
         "releases": [
           {
             "tag": "v0.2.1",
             "publishedAt": "2026-06-03T15:14:32Z",
-            "downloads": 1
+            "downloads": 8
           },
           {
             "tag": "v0.2.0",
@@ -24,14 +24,14 @@
       },
       {
         "label": "v0.1.x",
-        "downloads": 19,
+        "downloads": 21,
         "firstReleasedAt": "2026-05-28",
         "lastReleasedAt": "2026-05-29",
         "releases": [
           {
             "tag": "v0.1.1",
             "publishedAt": "2026-05-29T19:31:10Z",
-            "downloads": 17
+            "downloads": 19
           },
           {
             "tag": "v0.1.0",

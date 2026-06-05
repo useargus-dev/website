@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PageLayout } from "@/components/layout/page-layout";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
@@ -9,6 +11,8 @@ import { RoadmapPage } from "@/pages/roadmap";
 export default function App() {
   return (
     <BrowserRouter>
+      <Analytics />
+      <SpeedInsights />
       <ScrollToTop />
       <PageLayout>
         <Routes>
