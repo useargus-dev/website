@@ -1,4 +1,4 @@
-import { Shield, Terminal } from "lucide-react";
+import { Map, Shield, Terminal } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { LINKS } from "@/constants/links";
 import { SectionLink } from "@/components/layout/section-link";
@@ -44,6 +44,9 @@ export function Header() {
           <NavLink to="/security" className={navLinkClass}>
             Security
           </NavLink>
+          <NavLink to="/roadmap" className={navLinkClass}>
+            Roadmap
+          </NavLink>
         </nav>
         <div className="flex shrink-0 items-center gap-2">
           <NavLink
@@ -65,6 +68,16 @@ export function Header() {
             title="Security"
           >
             <Shield size={20} aria-hidden />
+          </NavLink>
+          <NavLink
+            to="/roadmap"
+            className={({ isActive }) =>
+              cn(headerIconButtonActiveClass(isActive), "sm:hidden")
+            }
+            aria-label="Roadmap"
+            title="Roadmap"
+          >
+            <Map size={20} aria-hidden />
           </NavLink>
           <ThemeToggle className="hidden sm:grid" />
           <LinkButton
