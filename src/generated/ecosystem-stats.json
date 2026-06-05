@@ -1,19 +1,24 @@
 {
-  "fetchedAt": "2026-06-03T11:57:21.051Z",
+  "fetchedAt": "2026-06-05T14:51:41.498Z",
   "github": {
-    "releaseDownloads": 19,
-    "latestVersion": "v0.2.0",
+    "releaseDownloads": 21,
+    "latestVersion": "v0.2.1",
     "versionGroups": [
       {
         "label": "v0.2.x",
-        "downloads": 0,
+        "downloads": 2,
         "firstReleasedAt": "2026-06-03",
         "lastReleasedAt": "2026-06-03",
         "releases": [
           {
+            "tag": "v0.2.1",
+            "publishedAt": "2026-06-03T15:14:32Z",
+            "downloads": 1
+          },
+          {
             "tag": "v0.2.0",
             "publishedAt": "2026-06-03T11:27:17Z",
-            "downloads": 0
+            "downloads": 1
           }
         ]
       },
@@ -44,7 +49,7 @@
     "href": "https://www.npmjs.com/package/@useargus/node"
   },
   "pypi": {
-    "downloadsLast30Days": 152,
+    "downloadsLast30Days": 264,
     "package": "useargus",
     "href": "https://pypi.org/project/useargus/"
   }
