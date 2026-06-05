@@ -111,6 +111,14 @@ export function Footer() {
                 </li>
                 <li>
                   <a
+                    href="/funding.json"
+                    className="text-text-muted hover:text-text"
+                  >
+                    Funding manifest
+                  </a>
+                </li>
+                <li>
+                  <a
                     href={LINKS.contactEmail}
                     className="break-all text-text-muted hover:text-text"
                   >
