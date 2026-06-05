@@ -73,6 +73,11 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/roadmap" className="text-text-muted hover:text-text">
+                    Roadmap
+                  </Link>
+                </li>
+                <li>
                   <a
                     href={LINKS.architectureDocs}
                     target="_blank"
