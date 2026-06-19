@@ -1,8 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { LINKS } from "@/constants/links";
-import { LinkButton } from "@/components/ui/button";
+import { RouteButton } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 
 export function CtaSection() {
@@ -23,14 +22,12 @@ export function CtaSection() {
             model before you trust it with production keys.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <LinkButton
-              href={LINKS.releases}
-              target="_blank"
-              rel="noreferrer"
+            <RouteButton
+              to="/downloads"
             >
               View releases
               <ArrowRight size={16} />
-            </LinkButton>
+            </RouteButton>
             <Link
               to="/usage"
               className={cn(

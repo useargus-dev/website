@@ -46,14 +46,9 @@ export function Footer() {
                   </SectionLink>
                 </li>
                 <li>
-                  <a
-                    href={LINKS.releases}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-text-muted hover:text-text"
-                  >
-                    Releases
-                  </a>
+                  <Link to="/downloads" className="text-text-muted hover:text-text">
+                    Downloads
+                  </Link>
                 </li>
               </ul>
             </div>

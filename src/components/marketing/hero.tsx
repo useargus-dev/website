@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { ArrowRight, Code2 } from "lucide-react";
 import { LINKS } from "@/constants/links";
-import { LinkButton } from "@/components/ui/button";
+import { LinkButton, RouteButton } from "@/components/ui/button";
 import { AppScreenPreview } from "./app-screen-preview";
 
 export function Hero() {
@@ -34,15 +34,10 @@ export function Hero() {
             project env, and grant access when a real process asks.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <LinkButton
-              href={LINKS.releases}
-              target="_blank"
-              rel="noreferrer"
-              className="px-5"
-            >
+            <RouteButton to="/downloads" className="px-5">
               Download for your OS
               <ArrowRight size={16} />
-            </LinkButton>
+            </RouteButton>
             <LinkButton
               href={LINKS.github}
               target="_blank"

@@ -1,8 +1,7 @@
 import { motion } from "motion/react";
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
-import { LINKS } from "@/constants/links";
-import { LinkButton } from "@/components/ui/button";
+import { RouteButton } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 
 const desktopFeatures = [
@@ -68,14 +67,9 @@ export function ProductTiers() {
                 </li>
               ))}
             </ul>
-            <LinkButton
-              href={LINKS.releases}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-8"
-            >
+            <RouteButton to="/downloads" className="mt-8">
               Get releases
-            </LinkButton>
+            </RouteButton>
           </motion.article>
 
           <motion.article

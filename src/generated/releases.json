@@ -1,0 +1,281 @@
+{
+  "fetchedAt": "2026-06-19T03:36:53.570Z",
+  "releases": [
+    {
+      "tag": "v0.2.1",
+      "name": "Argus v0.2.1",
+      "publishedAt": "2026-06-03T15:14:32Z",
+      "body": "## Argus v0.2.1 — Fix flashing console windows on Windows (release builds)\n\nBug-fix patch. Upgrade from v0.2.0 with no migration or config changes.",
+      "htmlUrl": "https://github.com/useargus-dev/argus/releases/tag/v0.2.1",
+      "assetsByOs": {
+        "windows": [
+          {
+            "name": "argus_0.2.1_x64_en-US.msi",
+            "label": "MSI installer (recommended)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.1/argus_0.2.1_x64_en-US.msi",
+            "size": 11055104
+          },
+          {
+            "name": "argus_0.2.1_x64-setup.exe",
+            "label": "EXE installer",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.1/argus_0.2.1_x64-setup.exe",
+            "size": 7859656
+          }
+        ],
+        "macos": [
+          {
+            "name": "argus_0.2.1_aarch64.dmg",
+            "label": "Apple Silicon (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.1/argus_0.2.1_aarch64.dmg",
+            "size": 11736375
+          },
+          {
+            "name": "argus_0.2.1_x64.dmg",
+            "label": "Intel (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.1/argus_0.2.1_x64.dmg",
+            "size": 9497720
+          },
+          {
+            "name": "argus_aarch64.app.tar.gz",
+            "label": "Apple Silicon (tar.gz)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.1/argus_aarch64.app.tar.gz",
+            "size": 12009609
+          },
+          {
+            "name": "argus_x64.app.tar.gz",
+            "label": "Intel (tar.gz)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.1/argus_x64.app.tar.gz",
+            "size": 9629788
+          }
+        ],
+        "linux": [
+          {
+            "name": "argus_0.2.1_amd64.deb",
+            "label": "Debian / Ubuntu (.deb)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.1/argus_0.2.1_amd64.deb",
+            "size": 14170990
+          },
+          {
+            "name": "argus_0.2.1_amd64.AppImage",
+            "label": "AppImage (portable)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.1/argus_0.2.1_amd64.AppImage",
+            "size": 90724856
+          },
+          {
+            "name": "argus-0.2.1-1.x86_64.rpm",
+            "label": "Fedora / RHEL (.rpm)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.1/argus-0.2.1-1.x86_64.rpm",
+            "size": 14171131
+          }
+        ]
+      }
+    },
+    {
+      "tag": "v0.2.0",
+      "name": "Argus v0.2.0",
+      "publishedAt": "2026-06-03T11:27:17Z",
+      "body": "## Argus v0.2.0\n\nDesktop vault with app buckets, IPC approval, and optional Argus Proxy.",
+      "htmlUrl": "https://github.com/useargus-dev/argus/releases/tag/v0.2.0",
+      "assetsByOs": {
+        "windows": [
+          {
+            "name": "argus_0.1.1_x64_en-US.msi",
+            "label": "MSI installer (recommended)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_x64_en-US.msi",
+            "size": 0
+          },
+          {
+            "name": "argus_0.1.1_x64-setup.exe",
+            "label": "EXE installer",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_x64-setup.exe",
+            "size": 0
+          }
+        ],
+        "macos": [
+          {
+            "name": "argus_0.1.1_aarch64.dmg",
+            "label": "Apple Silicon (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_aarch64.dmg",
+            "size": 0
+          },
+          {
+            "name": "argus_0.1.1_x64.dmg",
+            "label": "Intel (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_x64.dmg",
+            "size": 0
+          },
+          {
+            "name": "argus_aarch64.app.tar.gz",
+            "label": "Apple Silicon (tar.gz)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_aarch64.app.tar.gz",
+            "size": 0
+          },
+          {
+            "name": "argus_x64.app.tar.gz",
+            "label": "Intel (tar.gz)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_x64.app.tar.gz",
+            "size": 0
+          }
+        ],
+        "linux": [
+          {
+            "name": "argus_0.1.1_amd64.deb",
+            "label": "Debian / Ubuntu (.deb)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_amd64.deb",
+            "size": 0
+          },
+          {
+            "name": "argus_0.1.1_amd64.AppImage",
+            "label": "AppImage (portable)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_amd64.AppImage",
+            "size": 0
+          },
+          {
+            "name": "argus-0.1.1-1.x86_64.rpm",
+            "label": "Fedora / RHEL (.rpm)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus-0.1.1-1.x86_64.rpm",
+            "size": 0
+          }
+        ]
+      }
+    },
+    {
+      "tag": "v0.1.1",
+      "name": "Argus v0.1.1",
+      "publishedAt": "2026-05-29T19:31:10Z",
+      "body": "## Argus v0.1.1\n\nPatch release with stability fixes.",
+      "htmlUrl": "https://github.com/useargus-dev/argus/releases/tag/v0.1.1",
+      "assetsByOs": {
+        "windows": [
+          {
+            "name": "argus_0.1.1_x64_en-US.msi",
+            "label": "MSI installer (recommended)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_x64_en-US.msi",
+            "size": 0
+          },
+          {
+            "name": "argus_0.1.1_x64-setup.exe",
+            "label": "EXE installer",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_x64-setup.exe",
+            "size": 0
+          }
+        ],
+        "macos": [
+          {
+            "name": "argus_0.1.1_aarch64.dmg",
+            "label": "Apple Silicon (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_aarch64.dmg",
+            "size": 0
+          },
+          {
+            "name": "argus_0.1.1_x64.dmg",
+            "label": "Intel (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_x64.dmg",
+            "size": 0
+          },
+          {
+            "name": "argus_aarch64.app.tar.gz",
+            "label": "Apple Silicon (tar.gz)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_aarch64.app.tar.gz",
+            "size": 0
+          },
+          {
+            "name": "argus_x64.app.tar.gz",
+            "label": "Intel (tar.gz)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_x64.app.tar.gz",
+            "size": 0
+          }
+        ],
+        "linux": [
+          {
+            "name": "argus_0.1.1_amd64.deb",
+            "label": "Debian / Ubuntu (.deb)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_amd64.deb",
+            "size": 0
+          },
+          {
+            "name": "argus_0.1.1_amd64.AppImage",
+            "label": "AppImage (portable)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_amd64.AppImage",
+            "size": 0
+          },
+          {
+            "name": "argus-0.1.1-1.x86_64.rpm",
+            "label": "Fedora / RHEL (.rpm)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus-0.1.1-1.x86_64.rpm",
+            "size": 0
+          }
+        ]
+      }
+    },
+    {
+      "tag": "v0.1.0",
+      "name": "Argus v0.1.0",
+      "publishedAt": "2026-05-28T04:09:10Z",
+      "body": "## Argus v0.1.0\n\nInitial public release.",
+      "htmlUrl": "https://github.com/useargus-dev/argus/releases/tag/v0.1.0",
+      "assetsByOs": {
+        "windows": [
+          {
+            "name": "argus_0.1.0_x64_en-US.msi",
+            "label": "MSI installer (recommended)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_x64_en-US.msi",
+            "size": 0
+          },
+          {
+            "name": "argus_0.1.0_x64-setup.exe",
+            "label": "EXE installer",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_x64-setup.exe",
+            "size": 0
+          }
+        ],
+        "macos": [
+          {
+            "name": "argus_0.1.0_aarch64.dmg",
+            "label": "Apple Silicon (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_aarch64.dmg",
+            "size": 0
+          },
+          {
+            "name": "argus_0.1.0_x64.dmg",
+            "label": "Intel (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_x64.dmg",
+            "size": 0
+          },
+          {
+            "name": "argus_aarch64.app.tar.gz",
+            "label": "Apple Silicon (tar.gz)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_aarch64.app.tar.gz",
+            "size": 0
+          },
+          {
+            "name": "argus_x64.app.tar.gz",
+            "label": "Intel (tar.gz)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_x64.app.tar.gz",
+            "size": 0
+          }
+        ],
+        "linux": [
+          {
+            "name": "argus_0.1.0_amd64.deb",
+            "label": "Debian / Ubuntu (.deb)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_amd64.deb",
+            "size": 0
+          },
+          {
+            "name": "argus_0.1.0_amd64.AppImage",
+            "label": "AppImage (portable)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_amd64.AppImage",
+            "size": 0
+          },
+          {
+            "name": "argus-0.1.0-1.x86_64.rpm",
+            "label": "Fedora / RHEL (.rpm)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus-0.1.0-1.x86_64.rpm",
+            "size": 0
+          }
+        ]
+      }
+    }
+  ]
+}

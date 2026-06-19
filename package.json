@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "fetch-stats": "node scripts/fetch-ecosystem-stats.mjs",
-    "prebuild": "node scripts/fetch-ecosystem-stats.mjs",
+    "fetch-releases": "node scripts/fetch-releases.mjs",
+    "prebuild": "node scripts/fetch-ecosystem-stats.mjs && node scripts/fetch-releases.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

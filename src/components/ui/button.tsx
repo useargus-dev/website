@@ -1,4 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from "react";
+import { Link, type LinkProps } from "react-router-dom";
 import { cn } from "@/lib/cn";
 
 type Variant = "primary" | "secondary" | "ghost";
@@ -23,6 +24,10 @@ type LinkButtonProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   variant?: Variant;
 };
 
+type RouteButtonProps = LinkProps & {
+  variant?: Variant;
+};
+
 export function Button({
   className,
   variant = "primary",
@@ -40,5 +45,15 @@ export function LinkButton({
 }: LinkButtonProps) {
   return (
     <a className={cn(baseClass, variants[variant], className)} {...props} />
+  );
+}
+
+export function RouteButton({
+  className,
+  variant = "primary",
+  ...props
+}: RouteButtonProps) {
+  return (
+    <Link className={cn(baseClass, variants[variant], className)} {...props} />
   );
 }

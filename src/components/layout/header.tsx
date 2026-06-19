@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { LINKS } from "@/constants/links";
 import { SectionLink } from "@/components/layout/section-link";
 import { Brand } from "@/components/ui/brand";
-import { LinkButton } from "@/components/ui/button";
+import { LinkButton, RouteButton } from "@/components/ui/button";
 import { headerIconButtonActiveClass } from "@/components/ui/header-icon-button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { cn } from "@/lib/cn";
@@ -89,14 +89,12 @@ export function Header() {
           >
             GitHub
           </LinkButton>
-          <LinkButton
-            href={LINKS.releases}
-            target="_blank"
-            rel="noreferrer"
+          <RouteButton
+            to="/downloads"
             className="hidden sm:inline-flex"
           >
             Download
-          </LinkButton>
+          </RouteButton>
         </div>
       </div>
     </header>
