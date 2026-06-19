@@ -1,5 +1,6 @@
 export const LINKS = {
   github: "https://github.com/useargus-dev/argus",
+  githubSponsors: "https://github.com/sponsors/useargus-dev",
   releases: "https://github.com/useargus-dev/argus/releases",
   contactEmail: "mailto:ssamuel.sushant@gmail.com",
   securityDocs: "https://github.com/useargus-dev/argus/blob/main/docs/security.md",
