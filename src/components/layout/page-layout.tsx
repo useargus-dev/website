@@ -3,10 +3,12 @@ import { Footer } from "./footer";
 import { Header } from "./header";
 import { MobileFloatingThemeToggle } from "./mobile-floating-theme-toggle";
 import { SponsorshipBanner } from "./sponsorship-banner";
+import { SponsorshipTopStrip } from "./sponsorship-top-strip";
 
 export function PageLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
+      <SponsorshipTopStrip />
       <Header />
       <main className="min-w-0 flex-1">{children}</main>
       <SponsorshipBanner />

@@ -1,11 +1,11 @@
 {
-  "fetchedAt": "2026-06-19T03:36:53.570Z",
+  "fetchedAt": "2026-06-19T05:15:38.965Z",
   "releases": [
     {
       "tag": "v0.2.1",
       "name": "Argus v0.2.1",
       "publishedAt": "2026-06-03T15:14:32Z",
-      "body": "## Argus v0.2.1 — Fix flashing console windows on Windows (release builds)\n\nBug-fix patch. Upgrade from v0.2.0 with no migration or config changes.",
+      "body": "## Argus v0.2.1 — Fix flashing console windows on Windows (release builds)\r\n\r\nBug-fix patch. Upgrade from v0.2.0 with no migration or config changes.\r\n\r\n---\r\n\r\n## Fixed\r\n\r\n**Console windows flashing on Windows during IPC and proxy use**\r\n\r\nOn release builds (`windows_subsystem = \"windows\"`), each `reg.exe` or `git.exe` subprocess spawned during client identity checks could briefly open and close its own console window — visible as random terminal flicker, especially when using the Node/Python SDKs or proxy-enabled buckets.\r\n\r\n> This did not affect `pnpm tauri dev` — debug builds reuse your existing terminal.\r\n\r\n### What changed\r\n- **Machine ID:** reads `HKLM\\SOFTWARE\\Microsoft\\Cryptography\\MachineGuid` via Win32 registry API instead of spawning `reg.exe`\r\n- **Git remote:** still uses `git remote get-url origin`, but with `CREATE_NO_WINDOW` so no visible console is created\r\n- **Caching:** machine ID read once per session; git remote cached per project directory to reduce subprocess calls\r\n\r\n### What did not change\r\n- Same fingerprint inputs (MachineGuid, git remote, process path, cwd, cmdline)\r\n- IPC approvals, grants, proxy MITM, and secret injection behavior unchanged\r\n- Linux and macOS unaffected\r\n\r\n---\r\n\r\n## Upgrade\r\n\r\nDownload the Windows installer below and install over v0.2.0. Fully quit and restart Argus before testing. No database migration required.",
       "htmlUrl": "https://github.com/useargus-dev/argus/releases/tag/v0.2.1",
       "assetsByOs": {
         "windows": [
@@ -74,7 +74,7 @@
       "tag": "v0.2.0",
       "name": "Argus v0.2.0",
       "publishedAt": "2026-06-03T11:27:17Z",
-      "body": "## Argus v0.2.0\n\nDesktop vault with app buckets, IPC approval, and optional Argus Proxy.",
+      "body": "## Argus v0.2.0 — Argus Proxy + Node & Python SDKs\r\n\r\nArgus keeps secrets in an encrypted local vault with process-verified IPC and human approval. v0.2 adds an optional per-bucket HTTP proxy so apps run with **placeholders** in the environment instead of real API keys, plus official client libraries.\r\n\r\n> **Early release notice:** Argus has not undergone a third-party security audit. Use for personal or non-production workflows. Report vulnerabilities via [GitHub Security Advisories](https://github.com/useargus-dev/argus/security/advisories) — not public issues.\r\n\r\n---\r\n\r\n## What's New\r\n\r\n### Argus Proxy\r\nOptional loopback HTTP(S) MITM proxy per bucket (`127.0.0.1:<port>`, ports 9000–9100):\r\n\r\n- Enable in the bucket UI → IPC injects `argus-proxy-*` **placeholders**, never real values\r\n- Per-mapping **allowed domains** (suffix match); hosts outside the allowlist get `403`\r\n- TLS MITM via local Argus CA — trust `~/.argus/ca-bundle.pem` in your HTTP client\r\n- Triple gate on `CONNECT`: Proxy-Authorization token + active client grant + OS-verified PID\r\n- Real secrets are swapped in at rewrite time, just before traffic goes upstream\r\n- Audit events: `PROXY_REQUEST`, `PROXY_HOST_DENIED`, `PROXY_GRANT_DENIED`\r\n- Sign-out stops all proxies; soft lock does not (approvals + proxy stay live while signed in)\r\n\r\n| Proxy | Client receives | Typical use |\r\n|-------|----------------|-------------|\r\n| Off | Real secret values in env (v0.1 behavior) | Scripts, local tools |\r\n| On | Placeholders in env; secrets only at rewrite | Apps calling HTTPS APIs |\r\n\r\n> Scope: HTTP(S) only — not gRPC or database drivers.\r\n\r\n### Official Client SDKs\r\n| Language | Package | Notes |\r\n|----------|---------|-------|\r\n| Node.js | `@useargus/node v0.2` | [node-argus](https://github.com/useargus-dev/node-argus) |\r\n| Python | `useargus v0.2` | [py-argus](https://github.com/useargus-dev/py-argus) |\r\n\r\nBoth libraries load bucket secrets via local IPC (`loadEnv` / `load_env`) with `.env` fallback and return proxy config. Wiring helpers included for `fetch`, `axios`, `httpx`, `requests`, Anthropic SDK, and LangChain — no global patching.\r\n\r\n### Fixes & UX\r\n- **Windows:** No more flashing console windows during IPC/proxy identity checks (Win32 registry API replaces `reg.exe`; git subprocess hidden; machine ID + git remote cached per project)\r\n- Bucket UI: proxy toggle, per-mapping allowed-host editor, inject-proxy-token reveal after save\r\n\r\n---\r\n\r\n## Upgrade from v0.1.x\r\n- In-app updater works from v0.1.0 / v0.1.1\r\n- No database migration required — proxy fields are additive\r\n- Projects with proxy **off** behave exactly like v0.1\r\n\r\n> **Packaging note:** Some asset filenames may show `0.1.1` from CI. Verify the release tag (`v0.2.0`) and checksums below.\r\n\r\n---\r\n\r\n## Known Limitations\r\n- Not audited — early-access security-sensitive software\r\n- Proxy off → real values in `process.env` / `os.environ` after approval\r\n- Proxy on → placeholders reduce exposure, but plaintext exists after rewrite upstream\r\n- HTTP(S) only for Argus Proxy\r\n- Audit log coverage is partial\r\n- Screen lock → app lock not yet wired\r\n\r\nFull detail: [`docs/security.md`](./docs/security.md)\r\n\r\n---\r\n\r\n## Documentation\r\n| Document | Description |\r\n|----------|-------------|\r\n| [README](./README.md) | Quick start and feature overview |\r\n| [Architecture](./docs/architecture.md) | IPC, proxy (§11.5), grants, SDK contract (§16) |\r\n| [Security](./docs/security.md) | Threat model, crypto, limitations |\r\n| [SECURITY.md](./SECURITY.md) | Vulnerability reporting |\r\n\r\n---\r\n\r\n## What's Next\r\n- Go, Ruby, and Java client libraries\r\n- Expanded audit logging\r\n- Screen lock → app lock integration\r\n- Roadmap toward v1.0 after security review — [`docs/plan.md`](./docs/plan.md)\r\n\r\n---\r\n\r\n*Built with Tauri 2, React 19, and Rust. Community edition: [AGPL-3.0](./LICENSE). Closed-source/SaaS: [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md).*",
       "htmlUrl": "https://github.com/useargus-dev/argus/releases/tag/v0.2.0",
       "assetsByOs": {
         "windows": [
@@ -82,13 +82,13 @@
             "name": "argus_0.1.1_x64_en-US.msi",
             "label": "MSI installer (recommended)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_x64_en-US.msi",
-            "size": 0
+            "size": 11067392
           },
           {
             "name": "argus_0.1.1_x64-setup.exe",
             "label": "EXE installer",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_x64-setup.exe",
-            "size": 0
+            "size": 7858219
           }
         ],
         "macos": [
@@ -96,25 +96,25 @@
             "name": "argus_0.1.1_aarch64.dmg",
             "label": "Apple Silicon (DMG)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_aarch64.dmg",
-            "size": 0
+            "size": 11729721
           },
           {
             "name": "argus_0.1.1_x64.dmg",
             "label": "Intel (DMG)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_x64.dmg",
-            "size": 0
+            "size": 9499154
           },
           {
             "name": "argus_aarch64.app.tar.gz",
             "label": "Apple Silicon (tar.gz)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_aarch64.app.tar.gz",
-            "size": 0
+            "size": 11987412
           },
           {
             "name": "argus_x64.app.tar.gz",
             "label": "Intel (tar.gz)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_x64.app.tar.gz",
-            "size": 0
+            "size": 9635351
           }
         ],
         "linux": [
@@ -122,19 +122,19 @@
             "name": "argus_0.1.1_amd64.deb",
             "label": "Debian / Ubuntu (.deb)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_amd64.deb",
-            "size": 0
+            "size": 14161728
           },
           {
             "name": "argus_0.1.1_amd64.AppImage",
             "label": "AppImage (portable)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus_0.1.1_amd64.AppImage",
-            "size": 0
+            "size": 90704376
           },
           {
             "name": "argus-0.1.1-1.x86_64.rpm",
             "label": "Fedora / RHEL (.rpm)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.2.0/argus-0.1.1-1.x86_64.rpm",
-            "size": 0
+            "size": 14161945
           }
         ]
       }
@@ -143,7 +143,7 @@
       "tag": "v0.1.1",
       "name": "Argus v0.1.1",
       "publishedAt": "2026-05-29T19:31:10Z",
-      "body": "## Argus v0.1.1\n\nPatch release with stability fixes.",
+      "body": "## Argus v0.1.1\r\n\r\nBug-fix patch. Upgrade from v0.1.0 with no migration or config changes.\r\n\r\n### Fixed\r\n- **Approvals window:** Restores from minimized (or hidden) when a new IPC access request arrives, instead of staying in the taskbar unnoticed.\r\n\r\n### Upgrade\r\nDownload your platform asset below, or update in-app from v0.1.0.",
       "htmlUrl": "https://github.com/useargus-dev/argus/releases/tag/v0.1.1",
       "assetsByOs": {
         "windows": [
@@ -151,13 +151,13 @@
             "name": "argus_0.1.1_x64_en-US.msi",
             "label": "MSI installer (recommended)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_x64_en-US.msi",
-            "size": 0
+            "size": 10457088
           },
           {
             "name": "argus_0.1.1_x64-setup.exe",
             "label": "EXE installer",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_x64-setup.exe",
-            "size": 0
+            "size": 7424990
           }
         ],
         "macos": [
@@ -165,25 +165,25 @@
             "name": "argus_0.1.1_aarch64.dmg",
             "label": "Apple Silicon (DMG)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_aarch64.dmg",
-            "size": 0
+            "size": 11064032
           },
           {
             "name": "argus_0.1.1_x64.dmg",
             "label": "Intel (DMG)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_x64.dmg",
-            "size": 0
+            "size": 8799466
           },
           {
             "name": "argus_aarch64.app.tar.gz",
             "label": "Apple Silicon (tar.gz)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_aarch64.app.tar.gz",
-            "size": 0
+            "size": 11316459
           },
           {
             "name": "argus_x64.app.tar.gz",
             "label": "Intel (tar.gz)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_x64.app.tar.gz",
-            "size": 0
+            "size": 8915501
           }
         ],
         "linux": [
@@ -191,28 +191,28 @@
             "name": "argus_0.1.1_amd64.deb",
             "label": "Debian / Ubuntu (.deb)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_amd64.deb",
-            "size": 0
+            "size": 13375462
           },
           {
             "name": "argus_0.1.1_amd64.AppImage",
             "label": "AppImage (portable)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus_0.1.1_amd64.AppImage",
-            "size": 0
+            "size": 89999864
           },
           {
             "name": "argus-0.1.1-1.x86_64.rpm",
             "label": "Fedora / RHEL (.rpm)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.1/argus-0.1.1-1.x86_64.rpm",
-            "size": 0
+            "size": 13374682
           }
         ]
       }
     },
     {
       "tag": "v0.1.0",
-      "name": "Argus v0.1.0",
+      "name": "Argus v0.1.0 — First public release",
       "publishedAt": "2026-05-28T04:09:10Z",
-      "body": "## Argus v0.1.0\n\nInitial public release.",
+      "body": "**Argus** is a local-first secrets vault for developers. Store API keys and credentials in an encrypted database on your machine—no cloud sync, no remote API for your secrets. Local apps request access through a process-verified IPC channel; you approve or deny each client from the tray or the main app.\r\n\r\n> **Early release notice:** Argus v0.1.0 is the first public build. It has **not** undergone a third-party security audit. Use it for personal or non-production workflows until you are comfortable with the [threat model and known limitations](https://github.com/useargus/argus/blob/main/docs/security.md#18-known-limitations). Report vulnerabilities via [GitHub Security Advisories](https://github.com/useargus/argus/security/advisories)—not public issues.\r\n\r\n---\r\n\r\n## Highlights\r\n\r\n### Encrypted vault\r\n- Full-database encryption with **SQLCipher** (`~/.argus/argus.db`)\r\n- Master password protected with **Argon2id**; per-secret **AES-GCM** at the value layer\r\n- Typed secrets (API keys, passwords, SSH keys, certificates, connection strings, notes, and more)\r\n- Tags, search/filters, expiry metadata, and archival\r\n\r\n### Authentication & session security\r\n- Local account registration with **mandatory second factor**: TOTP or platform **biometric** unlock\r\n- **Soft lock** (idle timeout) protects the main UI while keeping approval flows available when signed in\r\n- **Sign out** stops the IPC server, zeroizes keys, and closes the database pool\r\n\r\n### App buckets (developer workflow)\r\n- Map environment variable names to vault secrets per application\r\n- Keep only `ARGUS_BUCKET_ID` and `ARGUS_BUCKET_TOKEN` in project repos—not secret values\r\n- Per-bucket client tokens (stored hashed); rotate from bucket settings\r\n\r\n### Process-verified IPC & human approval\r\n- Local IPC endpoint while signed in:\r\n  - **Windows:** `\\\\.\\pipe\\argus`\r\n  - **macOS / Linux:** `~/.argus/argus.sock`\r\n- Client identity derived **server-side** from OS process inspection and a SHA-256 fingerprint\r\n- Every new client requires explicit approval; returning clients respect per-bucket grant TTL\r\n- Injectable secret types enforced in **Rust** (e.g. credentials and recovery codes are not injected via IPC)\r\n- **Requests window** — compact tray popup for pending access requests (last 15 minutes)\r\n- **Approvals page** — view and revoke active grants (available even when the vault UI is soft-locked)\r\n\r\n### Desktop experience\r\n- Cross-platform desktop app: **Windows, macOS (Intel & Apple Silicon), Linux**\r\n- System tray integration: hide on close, quick access to requests\r\n- Settings for security, notifications, auto-lock, and tray behavior\r\n- In-app updates via Tauri updater (signed artifacts)\r\n\r\n---\r\n\r\n## Install\r\n\r\nDownload the installer or archive for your platform from the **Assets** section below.\r\n\r\n**Requirements:** A local user account on your machine; no cloud account required.\r\n\r\n**First run:** Create an account, enroll TOTP or biometric unlock, then add secrets and optional app buckets.\r\n\r\n**Developers integrating locally:** See the repository README and `docs/architecture.md` §11. Test IPC with `pnpm ipc:test` from a source checkout. Official **Python/Node client libraries** are planned; this release ships the desktop app and IPC protocol only.\r\n\r\n---\r\n\r\n## Documentation\r\n\r\n| Document | Description |\r\n|----------|-------------|\r\n| [README](https://github.com/useargus/argus/blob/main/README.md) | Quick start and feature overview |\r\n| [Architecture](https://github.com/useargus/argus/blob/main/docs/architecture.md) | System design, IPC, data layout |\r\n| [Security](https://github.com/useargus/argus/blob/main/docs/security.md) | Threat model, crypto parameters, limitations |\r\n| [SECURITY.md](https://github.com/useargus/argus/blob/main/SECURITY.md) | Vulnerability reporting |\r\n\r\n---\r\n\r\n## Known limitations (v0.1.0)\r\n\r\n- **Not audited** — treat as early-access security-sensitive software\r\n- **Post-injection exposure** — after Argus injects env vars, the client process owns that memory\r\n- **User-approved malware** — approval UI is the last line of defense; always verify the full process path\r\n- **Privileged attackers** — root/kernel attackers can target an unlocked session\r\n- **No packaged client SDKs yet** — integrate via documented IPC or `pnpm ipc:test` from source\r\n- **Audit log** — append-only audit is partial; fuller logging is on the roadmap\r\n\r\n---\r\n\r\n## License\r\n\r\nCommunity edition source is licensed under **[AGPL-3.0](https://github.com/useargus/argus/blob/main/LICENSE)**. See [COMMERCIAL_LICENSE.md](https://github.com/useargus/argus/blob/main/COMMERCIAL_LICENSE.md) for closed-source or SaaS use cases.\r\n\r\n---\r\n\r\n## What’s next\r\n\r\n- Official client libraries (Python, Node)\r\n- Expanded audit logging and hardening\r\n- Roadmap toward v1.0 after security review and milestone completion — see `docs/plan.md`\r\n\r\n**Full changelog:** This is the initial public release; all features above are new in v0.1.0.\r\n\r\n---\r\n\r\n*Built with [Tauri 2](https://v2.tauri.app/), React 19, and Rust.*",
       "htmlUrl": "https://github.com/useargus-dev/argus/releases/tag/v0.1.0",
       "assetsByOs": {
         "windows": [
@@ -220,13 +220,13 @@
             "name": "argus_0.1.0_x64_en-US.msi",
             "label": "MSI installer (recommended)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_x64_en-US.msi",
-            "size": 0
+            "size": 10452992
           },
           {
             "name": "argus_0.1.0_x64-setup.exe",
             "label": "EXE installer",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_x64-setup.exe",
-            "size": 0
+            "size": 7431436
           }
         ],
         "macos": [
@@ -234,25 +234,25 @@
             "name": "argus_0.1.0_aarch64.dmg",
             "label": "Apple Silicon (DMG)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_aarch64.dmg",
-            "size": 0
+            "size": 11082699
           },
           {
             "name": "argus_0.1.0_x64.dmg",
             "label": "Intel (DMG)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_x64.dmg",
-            "size": 0
+            "size": 8798931
           },
           {
             "name": "argus_aarch64.app.tar.gz",
             "label": "Apple Silicon (tar.gz)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_aarch64.app.tar.gz",
-            "size": 0
+            "size": 11337620
           },
           {
             "name": "argus_x64.app.tar.gz",
             "label": "Intel (tar.gz)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_x64.app.tar.gz",
-            "size": 0
+            "size": 8921841
           }
         ],
         "linux": [
@@ -260,19 +260,19 @@
             "name": "argus_0.1.0_amd64.deb",
             "label": "Debian / Ubuntu (.deb)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_amd64.deb",
-            "size": 0
+            "size": 13402174
           },
           {
             "name": "argus_0.1.0_amd64.AppImage",
             "label": "AppImage (portable)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus_0.1.0_amd64.AppImage",
-            "size": 0
+            "size": 90003960
           },
           {
             "name": "argus-0.1.0-1.x86_64.rpm",
             "label": "Fedora / RHEL (.rpm)",
             "url": "https://github.com/useargus-dev/argus/releases/download/v0.1.0/argus-0.1.0-1.x86_64.rpm",
-            "size": 0
+            "size": 13402233
           }
         ]
       }
