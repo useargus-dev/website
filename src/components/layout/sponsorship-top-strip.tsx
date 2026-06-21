@@ -1,23 +1,7 @@
-import { useEffect, useState } from "react";
-import { Heart, X } from "lucide-react";
+import { Heart } from "lucide-react";
 import { LINKS } from "@/constants/links";
 
-const DISMISS_KEY = "argus-sponsor-top-dismissed";
-
 export function SponsorshipTopStrip() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(localStorage.getItem(DISMISS_KEY) !== "1");
-  }, []);
-
-  function dismiss() {
-    localStorage.setItem(DISMISS_KEY, "1");
-    setVisible(false);
-  }
-
-  if (!visible) return null;
-
   return (
     <div
       role="region"
@@ -44,14 +28,6 @@ export function SponsorshipTopStrip() {
             sponsor on GitHub
           </a>
         </p>
-        <button
-          type="button"
-          onClick={dismiss}
-          className="grid size-7 shrink-0 place-items-center rounded-md text-text-muted transition-colors hover:bg-surface/60 hover:text-text"
-          aria-label="Dismiss sponsorship message"
-        >
-          <X size={15} aria-hidden />
-        </button>
       </div>
     </div>
   );

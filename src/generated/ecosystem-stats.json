@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-06-19T05:15:38.508Z",
+  "fetchedAt": "2026-06-21T12:06:55.801Z",
   "github": {
     "releaseDownloads": 41,
     "latestVersion": "v0.2.1",
@@ -44,12 +44,12 @@
     "href": "https://github.com/useargus-dev/argus/releases"
   },
   "npm": {
-    "downloadsLastMonth": 302,
+    "downloadsLastMonth": 317,
     "package": "@useargus/node",
     "href": "https://www.npmjs.com/package/@useargus/node"
   },
   "pypi": {
-    "downloadsLast30Days": 328,
+    "downloadsLast30Days": 333,
     "package": "useargus",
     "href": "https://pypi.org/project/useargus/"
   }
