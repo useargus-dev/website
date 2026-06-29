@@ -35,7 +35,7 @@ export function Limitations() {
         <div className="flex items-start gap-3">
           <Info size={18} className="mt-0.5 shrink-0 text-signal" />
           <div>
-            <h3 className="font-medium text-text">Release limitations (v0.2)</h3>
+            <h3 className="font-medium text-text">Release limitations (v0.3)</h3>
             <ul className="mt-3 space-y-2 text-sm text-text-muted">
               {KNOWN_LIMITATIONS.map((item) => (
                 <li key={item} className="flex gap-2">

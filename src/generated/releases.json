@@ -1,6 +1,51 @@
 {
-  "fetchedAt": "2026-06-21T12:06:56.297Z",
+  "fetchedAt": "2026-06-29T23:29:47.625Z",
   "releases": [
+    {
+      "tag": "v0.3.0",
+      "name": "Argus v0.3.0",
+      "publishedAt": "2026-06-29T16:57:02Z",
+      "body": "## Argus v0.3.0 — `argus run`: OS-level secret injection\r\n\r\n> **Early release notice:** Argus has not undergone a third-party security audit. Use for personal or non-production workflows.\r\n\r\n### What's New\r\n\r\n#### `argus run` — Transparent OS-level capture (Linux & Windows)\r\nWrap any command and intercept outbound HTTP/HTTPS at the OS level — no per-library SDK wiring required.\r\n\r\n```sh\r\nargus run uvicorn app:main --reload\r\nargus run node server.js\r\nargus run --bucket my-bucket -- cargo run --release\r\n```\r\n\r\n| Flag | Purpose |\r\n|------|---------|\r\n| `--bucket` | Bucket UUID or name (default: `ARGUS_BUCKET_ID` from `.env`) |\r\n| `--no-proxy` | Inject secrets only, no OS capture (no sudo/UAC) |\r\n| `--dry-run` | Validate plan without executing |\r\n\r\n**How it works:**\r\n- **Linux** — eBPF redirector; may prompt `sudo` once per timeout\r\n- **Windows** — WinDivert redirector with UAC prompt for redirector only; CLI stays unprivileged\r\n- **macOS** — `--no-proxy` (secrets-only injection); full capture deferred to M4\r\n\r\nTraffic is routed through the existing Argus Proxy MITM stack — placeholders are rewritten to real secrets at the proxy layer.\r\n\r\n#### New CLI Commands\r\n\r\n| Command | Description |\r\n|---------|-------------|\r\n| `argus run` | OS-level capture + secret injection |\r\n| `argus status` | IPC reachability check (`--json` supported) |\r\n| `argus sessions` | List active sandbox sessions |\r\n\r\n#### IPC v4 — Sandbox Session Protocol\r\nNew typed sandbox messages: `sandbox_create`, `sandbox_register_pids`, `sandbox_revoke`, `sandbox_list`. No database migration required — additive sandbox tables only (`003_sandbox.sql`).\r\n\r\n#### Windows CLI Discovery (PR #27)\r\n- Registers App Paths for `argus.exe` — no `PATH` modification\r\n- Installs `argus.cmd` shim in `%LOCALAPPDATA%\\Microsoft\\WindowsApps`\r\n- Validates bundled sidecars at install time; aborts with a clear error if incomplete\r\n\r\n### Platform Support\r\n\r\n| Platform | Desktop | `argus run` capture |\r\n|----------|---------|-------------------|\r\n| Linux (kernel ≥ 6.8) | ✅ | ✅ |\r\n| Windows | ✅ | ✅ (UAC for redirector) |\r\n| macOS | ✅ | ❌ Use `--no-proxy` |\r\n\r\n### Known Limitations\r\n- Not audited — early-access security-sensitive software\r\n- macOS capture not yet shipped (planned M4)\r\n- HTTP/HTTPS only — not gRPC, DB drivers, or QUIC\r\n- Apps with certificate pinning will fail MITM (by design)\r\n- Audit log coverage remains partial\r\n\r\n### Upgrade from v0.2.x\r\n1. Download the platform installer from Assets below\r\n2. Install over v0.2.x (Windows: use `*_x64-setup.exe`)\r\n3. Fully quit and restart Argus desktop\r\n4. Enable Argus Proxy on your target bucket\r\n5. Open a new terminal and verify:\r\n```sh\r\n   argus status\r\n   argus run --dry-run -- echo hello\r\n```\r\n\r\nExisting `load_env()` / SDK wiring from v0.2 continues to work unchanged.",
+      "htmlUrl": "https://github.com/useargus-dev/argus/releases/tag/v0.3.0",
+      "assetsByOs": {
+        "windows": [
+          {
+            "name": "argus_0.3.0_x64-setup.exe",
+            "label": "EXE installer",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.3.0/argus_0.3.0_x64-setup.exe",
+            "size": 9125721
+          }
+        ],
+        "macos": [
+          {
+            "name": "argus_0.3.0_aarch64.dmg",
+            "label": "Apple Silicon (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.3.0/argus_0.3.0_aarch64.dmg",
+            "size": 11850440
+          },
+          {
+            "name": "argus_0.3.0_x64.dmg",
+            "label": "Intel (DMG)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.3.0/argus_0.3.0_x64.dmg",
+            "size": 9614736
+          }
+        ],
+        "linux": [
+          {
+            "name": "argus_0.3.0_amd64.deb",
+            "label": "Debian / Ubuntu (.deb)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.3.0/argus_0.3.0_amd64.deb",
+            "size": 17695872
+          },
+          {
+            "name": "argus-0.3.0-1.x86_64.rpm",
+            "label": "Fedora / RHEL (.rpm)",
+            "url": "https://github.com/useargus-dev/argus/releases/download/v0.3.0/argus-0.3.0-1.x86_64.rpm",
+            "size": 17696324
+          }
+        ]
+      }
+    },
     {
       "tag": "v0.2.1",
       "name": "Argus v0.2.1",

@@ -29,8 +29,10 @@ export function RoadmapPage() {
           , and a future self-hosted system for teams.
         </p>
         <p className="mt-3 text-sm text-text-muted">
-          Current release: <span className="font-medium text-text">v0.2</span> —{" "}
-          {shippedPhases} of {ROADMAP_PHASES.length} phases shipped.
+          Current release: <span className="font-medium text-text">v0.3</span> — Argus
+          Sandbox on Linux and Windows;{" "}
+          {shippedPhases} of {ROADMAP_PHASES.length} phases fully shipped, Argus Sandbox
+          in progress.
         </p>
       </motion.header>
 

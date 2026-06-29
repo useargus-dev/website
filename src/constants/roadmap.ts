@@ -7,8 +7,10 @@ export type RoadmapPhase = {
   id: string;
   title: string;
   description: string;
-  /** Shipped phases show a “Done” badge; planned phases show “Planned”. */
+  /** Shipped phases show a “Shipped” badge; planned phases show “Planned”. */
   shipped: boolean;
+  /** Optional badge override (e.g. “In progress”). */
+  statusLabel?: string;
   items: RoadmapItem[];
 };
 
@@ -52,7 +54,7 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
   },
   {
     id: "proxy",
-    title: "Argus Proxy (library mode)",
+    title: "Argus Proxy (v0.2.x)",
     description:
       "Optional per-bucket HTTP MITM proxy so proxy-enabled mappings use placeholders — real secrets rewritten only at outbound request time.",
     shipped: true,
@@ -68,24 +70,27 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
     ],
   },
   {
-    id: "run-mode",
-    title: "Run mode (OS sandbox)",
+    id: "argus-sandbox",
+    title: "Argus Sandbox",
     description:
-      "argus run wraps any command and intercepts outbound HTTP/HTTPS at the OS level — no per-library proxy wiring.",
+      "v0.3 — argus run wraps any command and intercepts outbound HTTP/HTTPS at the OS level. Linux and Windows capture ship in full installers; macOS capture and CLI polish are next.",
     shipped: false,
+    statusLabel: "In progress",
     items: [
-      { label: "argus run <command> CLI sidecar (docker run-style UX)", done: false },
-      { label: "Transparent network capture via mitmproxy_rs redirectors", done: false },
-      { label: "Linux capture (eBPF / Aya)", done: false },
-      { label: "Windows capture (WinDivert elevated redirector)", done: false },
-      { label: "macOS capture (Network Extension system extension)", done: false },
-      { label: "Sandbox sessions with grant delegation to child processes", done: false },
-      { label: "Transparent proxy acceptor in Argus core", done: false },
-      { label: "Process tree support (uvicorn --reload, npm scripts)", done: false },
-      { label: "argus status and argus sessions commands", done: false },
+      { label: "argus run <command> CLI (docker run-style UX)", done: true },
+      { label: "Transparent capture via mitmproxy_rs redirectors", done: true },
+      { label: "Linux capture (eBPF redirector bundled in .deb / .rpm)", done: true },
+      { label: "Windows capture (WinDivert redirector in NSIS installer)", done: true },
+      { label: "Sandbox sessions with grant delegation to child PIDs", done: true },
+      { label: "Transparent proxy acceptor + relay attestation in Argus core", done: true },
+      { label: "Process tree support (uvicorn --reload, npm scripts)", done: true },
+      { label: "argus status and argus sessions commands", done: true },
+      { label: "Full-stack installers (no standalone sidecar release zips)", done: true },
+      { label: "macOS OS capture (Network Extension)", done: false },
       { label: "Live traffic summary in terminal (--traffic)", done: false },
-      { label: "Optional filesystem isolation (--isolate)", done: false },
       { label: "argus doctor preflight checks", done: false },
+      { label: "argus sessions revoke and desktop UI for active runs", done: false },
+      { label: "Optional filesystem isolation (--isolate)", done: false },
     ],
   },
   {

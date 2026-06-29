@@ -8,6 +8,7 @@ import { Hardening } from "@/components/security/hardening";
 import { IpcDetail } from "@/components/security/ipc-detail";
 import { Limitations } from "@/components/security/limitations";
 import { ProxyDetail } from "@/components/security/proxy-detail";
+import { SandboxDetail } from "@/components/security/sandbox-detail";
 import { SecuritySection } from "@/components/security/section";
 import { SecretMatrix } from "@/components/security/secret-matrix";
 import { ThreatGrid } from "@/components/security/threat-grid";
@@ -29,9 +30,13 @@ export function SecurityPage() {
           Security model
         </h1>
         <p className="mt-4 leading-relaxed text-text-muted">
-          Argus v0.2 is early software and has not been independently security-audited.
+          Argus v0.3 is early software and has not been independently security-audited.
           This page describes the design intent and controls implemented in the open
-          source desktop app. For the full specification, parameter tables, and release
+          source desktop app — Argus Proxy, Argus Sandbox (
+          <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs text-text">
+            argus run
+          </code>
+          ), and local IPC grants. For the full specification, parameter tables, and release
           checklist, see the repository.
         </p>
         <a
@@ -74,7 +79,7 @@ export function SecurityPage() {
         <SecuritySection
           id="limitations"
           title="Known limitations"
-          description="Threats outside Argus's design boundary in the current release."
+          description="Threats outside Argus's design boundary, plus release-scope gaps for v0.3."
         >
           <Limitations />
         </SecuritySection>
@@ -111,6 +116,22 @@ export function SecurityPage() {
         </SecuritySection>
 
         <SecuritySection
+          id="sandbox"
+          title="Argus Sandbox"
+          description="OS-level capture via argus run — grant delegation, relay attestation, and redirector peers."
+        >
+          <SandboxDetail />
+          <p className="mt-6 text-sm leading-relaxed text-text-muted">
+            Enable proxy on a bucket before using Argus Sandbox. The CLI creates a sandbox
+            session via IPC, starts the platform redirector (eBPF on Linux, WinDivert on
+            Windows), and injects CA bundle paths into the child environment. Real API
+            keys are rewritten at MITM time — same placeholder rules for Argus Sandbox
+            and legacy library proxy. See Usage for the recommended loadEnv + argus run
+            path and legacy v0.2.x client wiring.
+          </p>
+        </SecuritySection>
+
+        <SecuritySection
           id="proxy"
           title="Argus Proxy (HTTP MITM)"
           description="Optional per-bucket loopback proxy that keeps real API keys out of process environment."
@@ -118,9 +139,9 @@ export function SecurityPage() {
           <ProxyDetail />
           <p className="mt-6 text-sm leading-relaxed text-text-muted">
             Enable proxy on a bucket, turn on inject proxy token per mapping, and set
-            allowed domains. Client libraries must use explicit factory helpers — loadEnv
-            alone does not configure global HTTP_PROXY. See Usage for Node.js and Python
-            examples with and without proxy.
+            allowed domains. With Argus Sandbox, outbound HTTPS is redirected here
+            automatically after grant checks. Legacy v0.2.x apps wire explicit SDK factory
+            helpers to this loopback port instead.
           </p>
         </SecuritySection>
 

@@ -16,14 +16,25 @@ export function UsageTeaser() {
         >
           <p className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-signal">
             <Package size={14} aria-hidden />
-            Client libraries
+            SDKs & Argus Sandbox
           </p>
           <h2 className="mt-2 text-3xl font-semibold tracking-tight text-text sm:text-4xl">
-            Drop-in SDKs for your stack
+            Load env, run in the sandbox
           </h2>
           <p className="mt-4 text-lg text-text-muted">
-            Node.js and Python are on npm and PyPI today. Go, Ruby, and Java clients
-            share the same IPC contract and are under active development.
+            Install the Python or Node SDK, call{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
+              loadEnv()
+            </code>{" "}
+            /{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
+              load_env()
+            </code>{" "}
+            in your app, then wrap it with{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
+              argus run
+            </code>{" "}
+            for OS-level HTTPS capture on Linux and Windows.
           </p>
           <Link
             to="/usage"
@@ -31,7 +42,7 @@ export function UsageTeaser() {
               "mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-signal hover:underline",
             )}
           >
-            Full usage guide
+            Usage guide
             <ArrowRight size={16} />
           </Link>
         </motion.div>

@@ -58,10 +58,13 @@ export function RoadmapPhaseCard({
                 "shrink-0 rounded-full px-2.5 py-1 text-xs font-medium",
                 phase.shipped
                   ? "bg-success/10 text-success"
-                  : "border border-border bg-surface-muted text-text-muted",
+                  : phase.statusLabel === "In progress"
+                    ? "border border-signal/30 bg-signal/10 text-signal"
+                    : "border border-border bg-surface-muted text-text-muted",
               )}
             >
-              {phase.shipped ? "Shipped" : "Planned"}
+              {phase.statusLabel ??
+                (phase.shipped ? "Shipped" : "Planned")}
             </span>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-text-muted">

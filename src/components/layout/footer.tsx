@@ -130,7 +130,7 @@ export function Footer() {
           </div>
         </div>
         <p className="mt-10 border-t border-border pt-6 text-xs text-text-muted">
-          Early development (v0.2). Not security-audited. Desktop app for Windows,
+          Early development (v0.3). Not security-audited. Desktop app for Windows,
           macOS, and Linux — no cloud sync or team server.
         </p>
       </div>

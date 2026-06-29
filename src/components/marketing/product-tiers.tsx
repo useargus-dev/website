@@ -9,15 +9,16 @@ const desktopFeatures = [
   "SQLCipher encrypted database",
   "App buckets + env mappings",
   "Optional Argus Proxy (HTTP MITM)",
+  "argus run — Argus Sandbox on Linux & Windows",
   "Local IPC with human approval",
   "System tray + requests window",
 ];
 
 const integrationFeatures = [
-  "npm install @useargus/node",
-  "pip install useargus",
-  "loadEnv() / load_env() — with or without proxy factories",
-  "Go, Ruby, and Java clients in development",
+  "argus run uvicorn / node / cargo — no SDK wiring",
+  "npm install @useargus/node · pip install useargus",
+  "loadEnv() / load_env() + argus run on Linux & Windows",
+  "Full installers bundle CLI + redirector (ARGUS_HOME)",
 ];
 
 export function ProductTiers() {
@@ -36,8 +37,12 @@ export function ProductTiers() {
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-text-muted">
             A privacy-first desktop vault on your machine — no cloud sync. Map env vars to
-            secrets, approve each process, and load them from your app with client
-            libraries — with optional HTTP proxy so keys never sit in process memory.
+            secrets, approve each process, and run apps with client libraries or{" "}
+            <strong className="font-medium text-text">Argus Sandbox</strong> (
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs">
+              argus run
+            </code>
+            ) for OS-level HTTPS capture.
           </p>
         </motion.div>
 
@@ -83,14 +88,15 @@ export function ProductTiers() {
               Available now
             </p>
             <h3 className="mt-2 text-2xl font-semibold text-text">
-              Client libraries
+              CLI + Argus Sandbox
             </h3>
             <p className="mt-2 text-sm text-text-muted">
-              Load bucket secrets into{" "}
+              Wrap any command with{" "}
               <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs">
-                process.env
+                argus run
               </code>{" "}
-              before your app starts — Argus must be signed in locally.
+              or load secrets via SDK before your app starts — Argus must be signed in
+              locally.
             </p>
             <ul className="mt-6 space-y-3">
               {integrationFeatures.map((item) => (

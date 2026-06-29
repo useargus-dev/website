@@ -1,9 +1,11 @@
 import {
   Fingerprint,
+  Globe,
   KeyRound,
   Lock,
   LogOut,
   ShieldCheck,
+  Terminal,
   Timer,
   type LucideIcon,
 } from "lucide-react";
@@ -23,9 +25,21 @@ export const FEATURES: Feature[] = [
   },
   {
     icon: KeyRound,
-    title: "App buckets + proxy",
+    title: "App buckets",
     description:
-      "Map env names to vault secrets. Optionally enable Argus Proxy so clients get placeholders — real keys stay in Argus until HTTP rewrite.",
+      "One bucket per app or service. Map env names to vault secrets and rotate client tokens — your app keeps the same variable names, values stay in Argus.",
+  },
+  {
+    icon: Globe,
+    title: "Argus Proxy",
+    description:
+      "Optional per-bucket HTTP MITM so clients get argus-proxy-* placeholders — real keys stay in Argus until outbound HTTP rewrite.",
+  },
+  {
+    icon: Terminal,
+    title: "Argus Sandbox",
+    description:
+      "Call load_env() / loadEnv() in your app, then wrap with argus run — outbound HTTPS is captured at the OS level on Linux and Windows.",
   },
   {
     icon: Fingerprint,

@@ -7,6 +7,7 @@ import { Hero } from "@/components/marketing/hero";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { ProductTiers } from "@/components/marketing/product-tiers";
 import { EcosystemStats } from "@/components/marketing/ecosystem-stats";
+import { ArgusSandboxTeaser } from "@/components/marketing/run-mode-teaser";
 import { UsageTeaser } from "@/components/marketing/usage-teaser";
 import { scrollToSectionWhenReady } from "@/lib/scroll-to-section";
 
@@ -31,6 +32,7 @@ export function HomePage() {
       <EcosystemStats />
       <ProductTiers />
       <Features />
+      <ArgusSandboxTeaser />
       <HowItWorks />
       <UsageTeaser />
       <AppScreenshots />

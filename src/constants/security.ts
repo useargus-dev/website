@@ -83,10 +83,10 @@ export const TRUST_LAYERS: TrustLayer[] = [
     trust: "untrusted",
     icon: Terminal,
     bullets: [
-      "Python, Node, or CLI processes connecting over local IPC",
+      "Python, Node, or argus run processes connecting over local IPC",
       "Cannot self-report identity — OS process inspection only",
       "Must present bucket ID, client token, and earn a grant",
-      "Hold env values in os.environ after approval (out of Argus control)",
+      "With proxy enabled, env holds argus-proxy-* placeholders — not real keys",
     ],
   },
 ];
@@ -144,10 +144,32 @@ export const IN_SCOPE_THREATS = [
   },
   {
     id: "T9",
-    threat: "Placeholder leaked without active grant",
-    mitigation: "Proxy CONNECT requires client token + grant + allowed domain.",
+    threat: "Placeholder or secret used without active grant",
+    mitigation:
+      "Proxy CONNECT and transparent gate require token + grant + allowed domain.",
     detail:
-      "With Argus Proxy enabled, env vars hold argus-proxy-* placeholders — not real secrets. MITM rewrite only runs after Proxy-Authorization, an active client_grants row for the connecting PID, and a host allowed by the mapping.",
+      "With Argus Proxy enabled (recommended for Sandbox and legacy library proxy), env vars hold argus-proxy-* placeholders. Real secrets are rewritten only after grant checks — via loopback CONNECT for library clients, or relay attestation + HMAC for Argus Sandbox capture.",
+  },
+  {
+    id: "T10",
+    threat: "Unregistered process hijacks sandbox traffic",
+    mitigation: "Transparent gate binds PID + process_boot_id + active grant.",
+    detail:
+      "Captured connections carry relay attestation and an HMAC header binding the OS-verified PID. Stale PID rows are deleted when boot ID mismatches — mitigating PID reuse after process exit.",
+  },
+  {
+    id: "T11",
+    threat: "Forged redirector connects to bucket proxy",
+    mitigation: "Peer executable attestation + per-session relay_secret HMAC.",
+    detail:
+      "The proxy verifies the connecting redirector binary path and tag before accepting relay frames. relay_secret lives in CLI memory only — never injected into sandbox children.",
+  },
+  {
+    id: "T12",
+    threat: "Child process bypasses argus run approval",
+    mitigation: "sandbox_register_pids requires parent fingerprint ownership.",
+    detail:
+      "Only the process that created the sandbox session (matching parent_fingerprint) can register child PIDs. Each registered PID still needs an active client_grants row for transparent MITM.",
   },
 ] as const;
 
@@ -156,7 +178,7 @@ export const OUT_OF_SCOPE = [
     id: "O1",
     threat: "Root or kernel attacker",
     reason:
-      "A privileged attacker can dump memory of an unlocked Argus process. Argus does not attempt kernel-level isolation.",
+      "A privileged attacker can dump memory of an unlocked Argus process or disable eBPF/WinDivert redirect rules during Argus Sandbox. Argus does not provide kernel-level isolation.",
   },
   {
     id: "O2",
@@ -166,9 +188,9 @@ export const OUT_OF_SCOPE = [
   },
   {
     id: "O3",
-    threat: "Malware after env access (non-proxy mappings)",
+    threat: "Malware inside an approved process",
     reason:
-      "When Argus Proxy is off, real secret values land in os.environ / process.env. Argus controls when values are provided, not the client's runtime after injection.",
+      "Argus controls who receives env access, not runtime after grant. With proxy enabled (the v0.3 recommended path), env holds placeholders — but malware in the approved process can still exfiltrate traffic or memory. Legacy non-proxy paths and argus run --no-proxy inject real values.",
   },
   {
     id: "O4",
@@ -185,16 +207,16 @@ export const OUT_OF_SCOPE = [
 ] as const;
 
 export const KNOWN_LIMITATIONS = [
-  "OS screen lock → app lock integration is planned but not wired in v0.2.",
-  "gRPC and database drivers are not proxied — HTTP(S) only for Argus Proxy.",
+  "Not independently security-audited — treat v0.3 as experimental for production secrets.",
+  "Argus Sandbox and Argus Proxy handle outbound HTTP(S) only — gRPC, QUIC, database drivers, certificate pinning, WSL2, Docker bridge networks, and some VPN split-tunnels bypass capture.",
 ] as const;
 
 export const PROXY_DETAILS = {
   loopback: [
     "Per-bucket toggle binds 127.0.0.1 on ports 9000–9100",
     "IPC ok response includes httpProxy, httpsProxy, noProxy, caBundlePath",
-    "SDK factories wire explicit client proxy + CA — no global env patches",
-    "Out of scope: gRPC, database drivers, non-HTTP protocols",
+    "v0.3: Argus Sandbox redirects captured HTTPS here — no per-client SDK wiring",
+    "Legacy v0.2.x: SDK factory helpers wire explicit client proxy + CA",
   ],
   placeholders: [
     "Proxy-enabled mappings inject argus-proxy-* strings into env — never real keys",
@@ -207,6 +229,33 @@ export const PROXY_DETAILS = {
     "Requires active client_grants row for OS-verified peer PID",
     "Host must match mapping allowlist — otherwise 403 Forbidden",
     "Audit events: PROXY_REQUEST, PROXY_HOST_DENIED, PROXY_GRANT_DENIED",
+  ],
+} as const;
+
+export const SANDBOX_DETAILS = {
+  lifecycle: [
+    "sandbox_create prompts once — child PIDs inherit the session without a second popup",
+    "Session bound to parent_fingerprint — only the creator can register PIDs or revoke",
+    "Grant revoke, bucket proxy disable, or tray deactivate cascade session revoke",
+    "Command exit tears down redirector and revokes the session automatically",
+  ],
+  relay: [
+    "Per-session relay_secret issued at sandbox_create — in-memory only, never in child env",
+    "Each relay TCP frame carries a 20-byte HMAC header binding the captured PID",
+    "Proxy verifies redirector peer executable + tag before MITM rewrite",
+    "ARGUS_SANDBOX=1 in child env is UX-only — server PID + grant checks are authoritative",
+  ],
+  pidGrant: [
+    "PID registration requires active client_grants row for the session grant_id",
+    "process_boot_id captured at register — transparent gate rejects stale PID reuse",
+    "Hot reload (uvicorn --reload) registers new worker PIDs without restarting capture",
+    "Transparent gate compares live boot ID and deletes stale rows on mismatch",
+  ],
+  redirector: [
+    "Linux: eBPF redirector bundled in .deb / .rpm — sudo once per session for load",
+    "Windows: WinDivert redirector in NSIS installer — UAC at redirector start",
+    "Traffic redirected to 127.0.0.1 on the bucket proxy port — HTTP_PROXY not set",
+    "Full installers bundle CLI + redirector; ARGUS_HOME set by installer (Path not modified)",
   ],
 } as const;
 

@@ -45,12 +45,12 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
     id: "run",
     title: "Run your app",
     description:
-      "loadEnv() / load_env() connects over local IPC. With proxy on, use SDK proxy helpers to wire your HTTP library.",
+      "Call loadEnv() / load_env() in your app, then wrap with argus run (Argus Sandbox) for OS capture on Linux and Windows.",
   },
   {
     id: "approve",
     title: "Approve bucket access",
     description:
-      "Review the executable path, working directory, and command line. Grant access for that fingerprint and TTL.",
+      "Review executable path, cwd, and command line. argus run approves once for the whole session; SDK mode may prompt per fingerprint.",
   },
 ];

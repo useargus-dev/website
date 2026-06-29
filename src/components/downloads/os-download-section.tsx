@@ -85,6 +85,12 @@ export function OsDownloadSection({
           {highlighted && (
             <p className="text-xs text-signal">Detected for your system</p>
           )}
+          {os === "macos" && (
+            <p className="mt-1 text-sm text-text-muted">
+              Argus Sandbox is not supported on macOS yet — the feature will be
+              included in a coming release.
+            </p>
+          )}
         </div>
       </div>
 

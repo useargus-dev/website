@@ -30,8 +30,14 @@ export function Hero() {
           </h1>
           <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-text-muted">
             Argus is a privacy-first developer secrets vault with app buckets and local IPC.
-            Map env vars to encrypted storage, add a bucket ID and token to your
-            project env, and grant access when a real process asks.
+            Map env vars to encrypted storage, add a bucket ID and token to your project env,
+            and grant access when a real process asks. v0.3 adds{" "}
+            <strong className="font-medium text-text">Argus Sandbox</strong> — wrap any command
+            with{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
+              argus run
+            </code>{" "}
+            for OS-level HTTPS capture on Linux and Windows.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <RouteButton to="/downloads" className="px-5">
@@ -49,7 +55,7 @@ export function Hero() {
             </LinkButton>
           </div>
           <p className="mt-4 text-xs text-text-muted">
-            AGPL-3.0 community edition · Windows, macOS, Linux
+            AGPL-3.0 · Windows, macOS, Linux · Argus Sandbox on Linux/Windows
           </p>
         </motion.div>
         <motion.div

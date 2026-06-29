@@ -15,11 +15,11 @@ export function CtaSection() {
       >
         <div className="rounded-2xl border border-border bg-surface-muted px-8 py-12 text-center shadow-subtle sm:px-12">
           <h2 className="text-2xl font-semibold tracking-tight text-text sm:text-3xl">
-            Ready to keep secrets off disk in your repo?
+            Ready to run with secrets off disk?
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-text-muted">
-            Download the latest build for your platform or read the security
-            model before you trust it with production keys.
+            Download the v0.3 installer for your platform — desktop, CLI, and redirector
+            bundled — or read the security model before trusting production keys.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <RouteButton
@@ -34,7 +34,7 @@ export function CtaSection() {
                 "inline-flex items-center justify-center rounded-md border border-border bg-surface-raised px-4 py-2.5 text-sm font-medium text-text transition-colors hover:bg-surface-muted"
               )}
             >
-              Usage
+              Usage guide
             </Link>
             <Link
               to="/security"

@@ -29,13 +29,13 @@ ARGUS_BUCKET_TOKEN=tok_...
 
 export const NODE_USAGE_GUIDE: UsageGuide = {
   intro:
-    "Install @useargus/node, load bucket secrets over local IPC, then wire Argus Proxy so HTTP clients use placeholders in process.env while Argus rewrites credentials upstream.",
+    "Install @useargus/node, call loadEnv() before your app reads process.env, then run inside Argus Sandbox so outbound HTTPS is captured at the OS on Linux and Windows.",
   steps: [
     {
       step: "01",
       title: "Install the package",
       description:
-        "Add the official Node client. It does not bundle undici or https-proxy-agent — install those in your app when you use fetch or axios with Argus Proxy.",
+        "Add the official Node client from npm.",
       filename: "Terminal",
       code: "npm install @useargus/node",
     },
@@ -43,7 +43,7 @@ export const NODE_USAGE_GUIDE: UsageGuide = {
       step: "02",
       title: "Add bucket credentials to .env",
       description:
-        "Store only ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in your project .env — never secret values. The desktop app injects real secrets (or argus-proxy-* placeholders when proxy is enabled) over IPC.",
+        "Store only ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in your project .env — never secret values. Enable Argus Proxy on the bucket so mappings receive argus-proxy-* placeholders.",
       filename: ".env",
       code: PROJECT_ENV,
     },
@@ -51,19 +51,34 @@ export const NODE_USAGE_GUIDE: UsageGuide = {
       step: "03",
       title: "Load env at startup",
       description:
-        "Call loadEnv() before the rest of your app reads process.env. The first connection may open an Argus approval dialog (up to ~120s). Idle app lock does not block IPC; sign-out returns locked.",
+        "Call loadEnv() before the rest of your app reads process.env. The first connection may open an Argus approval dialog (up to ~120s). Inside an active sandbox session, child processes skip a second popup.",
       filename: "app.js",
       code: `import { loadEnv } from "@useargus/node";
 
 await loadEnv();
-// process.env.ANTHROPIC_API_KEY is set (real value or argus-proxy-* placeholder)`,
+// process.env.ANTHROPIC_API_KEY holds an argus-proxy-* placeholder
+
+import "./server.js";`,
     },
     {
       step: "04",
-      title: "Wire Argus Proxy for your HTTP client",
+      title: "Run inside Argus Sandbox",
       description:
-        "Enable proxy on the bucket in Argus. Proxy-enabled mappings receive argus-proxy-* placeholders in env — use the matching SDK helper below. Keep using process.env for the API key header; Argus rewrites it at the proxy.",
-      libraries: [
+        "Wrap your app with argus run. Outbound HTTPS is redirected through your bucket proxy — use process.env in headers as usual; Argus rewrites placeholders upstream. On macOS or CI, use --no-proxy to load env without OS capture.",
+      filename: "Terminal",
+      code: `argus run node app.js
+argus run npm start
+argus run --no-proxy -- node app.js`,
+    },
+  ],
+};
+
+const NODE_LEGACY_PROXY_STEP: UsageGuideStep = {
+  step: "legacy",
+  title: "Wire Argus Proxy per HTTP client",
+  description:
+    "v0.2.x pattern: run your app directly (no argus run) and point fetch, axios, or other clients at the bucket loopback proxy with SDK factory helpers. Still supported; Argus Sandbox is the recommended path in v0.3.",
+  libraries: [
         {
           id: "fetch",
           label: "fetch",
@@ -152,19 +167,16 @@ const dispatcher = await createArgusUndiciDispatcher();
 await fetch(url, { dispatcher, headers: { "x-api-key": process.env.ANTHROPIC_API_KEY! } });`,
         },
       ],
-    },
-  ],
 };
 
 export const PYTHON_USAGE_GUIDE: UsageGuide = {
   intro:
-    "Install useargus, load bucket secrets into os.environ, then wire Argus Proxy with the per-library config helpers so placeholders never become real keys in your process.",
+    "Install useargus, call load_env() before your app reads os.environ, then run inside Argus Sandbox so outbound HTTPS is captured at the OS on Linux and Windows.",
   steps: [
     {
       step: "01",
       title: "Install the package",
-      description:
-        "Add the official Python client. HTTP libraries (httpx, requests, aiohttp) stay in your app — useargus returns config dicts and adapters, not wrapped clients.",
+      description: "Add the official Python client from PyPI.",
       filename: "Terminal",
       code: "pip install useargus",
     },
@@ -172,7 +184,7 @@ export const PYTHON_USAGE_GUIDE: UsageGuide = {
       step: "02",
       title: "Add bucket credentials to .env",
       description:
-        "Store only ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in your project .env — never secret values. useargus merges .env after the bucket fetch; duplicate keys in .env override bucket values.",
+        "Store only ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in your project .env — never secret values. Enable Argus Proxy on the bucket so mappings receive argus-proxy-* placeholders.",
       filename: ".env",
       code: PROJECT_ENV,
     },
@@ -180,19 +192,35 @@ export const PYTHON_USAGE_GUIDE: UsageGuide = {
       step: "03",
       title: "Load env at startup",
       description:
-        "Call load_env() before other modules read os.environ. Same IPC and approval flow as Node. With proxy off, real secrets are injected; with proxy on, mappings use argus-proxy-* placeholders.",
+        "Call load_env() before other modules read os.environ. Inside an active sandbox session, child processes skip a second approval popup.",
       filename: "main.py",
       code: `from useargus import load_env
 
 load_env()
-# os.environ["ANTHROPIC_API_KEY"] is set`,
+# os.environ["ANTHROPIC_API_KEY"] holds an argus-proxy-* placeholder
+
+import uvicorn
+uvicorn.run("app:app", host="0.0.0.0", port=8000)`,
     },
     {
       step: "04",
-      title: "Wire Argus Proxy for your HTTP client",
+      title: "Run inside Argus Sandbox",
       description:
-        "Enable proxy on the bucket in Argus. Use the helper for your stack below — pass the placeholder from os.environ in headers; Argus rewrites credentials at the proxy.",
-      libraries: [
+        "Wrap your app with argus run. Outbound HTTPS is redirected through your bucket proxy — pass os.environ values in headers as usual. On macOS or CI, use --no-proxy to load env without OS capture.",
+      filename: "Terminal",
+      code: `argus run python main.py
+argus run uvicorn app:main --reload
+argus run --no-proxy -- python main.py`,
+    },
+  ],
+};
+
+const PYTHON_LEGACY_PROXY_STEP: UsageGuideStep = {
+  step: "legacy",
+  title: "Wire Argus Proxy per HTTP client",
+  description:
+    "v0.2.x pattern: run your app directly (no argus run) and wire requests, httpx, or other clients to the bucket loopback proxy with SDK config helpers. Still supported; Argus Sandbox is the recommended path in v0.3.",
+  libraries: [
         {
           id: "httpx",
           label: "httpx",
@@ -300,8 +328,19 @@ async with aiohttp.ClientSession(
         ...`,
         },
       ],
-    },
-  ],
+};
+
+export const LEGACY_PROXY_GUIDES: Record<"node" | "python", UsageGuide> = {
+  node: {
+    intro:
+      "Before Argus Sandbox (v0.3), apps wired each HTTP client to the bucket loopback proxy manually. This library proxy mode remains available on v0.2.x workflows.",
+    steps: [NODE_LEGACY_PROXY_STEP],
+  },
+  python: {
+    intro:
+      "Before Argus Sandbox (v0.3), apps wired each HTTP client to the bucket loopback proxy manually. This library proxy mode remains available on v0.2.x workflows.",
+    steps: [PYTHON_LEGACY_PROXY_STEP],
+  },
 };
 
 export const USAGE_GUIDES: Record<"node" | "python", UsageGuide> = {

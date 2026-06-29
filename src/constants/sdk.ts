@@ -38,7 +38,7 @@ export const SDK_LANGUAGES: SdkLanguage[] = [
     },
     sourceRepoUrl: "https://github.com/useargus-dev/node-argus",
     summary:
-      "Load bucket secrets into process.env. Optional proxy config helpers and agent builders for fetch, axios, Anthropic SDK, and more.",
+      "Load bucket secrets with loadEnv(), then run inside Argus Sandbox (argus run) for OS-level HTTPS capture on Linux and Windows.",
     blocks: [],
   },
   {
@@ -53,7 +53,7 @@ export const SDK_LANGUAGES: SdkLanguage[] = [
     },
     sourceRepoUrl: "https://github.com/useargus-dev/py-argus",
     summary:
-      "Load bucket secrets into os.environ — same IPC contract as Node, with proxy helpers for requests, httpx, aiohttp, and Anthropic.",
+      "Load bucket secrets with load_env(), then run inside Argus Sandbox (argus run) for OS-level HTTPS capture on Linux and Windows.",
     blocks: [],
   },
   {
@@ -121,10 +121,12 @@ public class Main {
 ];
 
 export const SDK_SHARED_NOTES = [
-  "Call load before the rest of your app reads environment variables.",
+  "Call loadEnv() / load_env() before the rest of your app reads environment variables.",
   "Put only ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in .env — not secret values.",
-  "First connection may show an Argus approval dialog (up to ~120s).",
+  "Enable Argus Proxy on the bucket so mappings receive argus-proxy-* placeholders.",
+  "Wrap your app with argus run — one approval per session; child PIDs inherit without a second popup.",
   "Idle app lock does not block IPC; only sign-out returns locked.",
   ".env overrides bucket values when the same key exists in both.",
-  "With Argus Proxy off: real secrets in env — use any HTTP client. With proxy on: placeholders in env — use SDK proxy helpers.",
+  "On macOS or CI, use argus run --no-proxy to load env without OS capture.",
+  "Full installers bundle CLI + redirector; ARGUS_HOME is set by the installer.",
 ] as const;
