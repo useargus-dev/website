@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 const desktopFeatures = [
   "Single-user desktop vault",
   "SQLCipher encrypted database",
-  "App buckets + env mappings",
+  "No API keys in repo .env — bucket ID + token only",
   "Optional Argus Proxy (HTTP MITM)",
   "argus run — Argus Sandbox on Linux & Windows",
   "Local IPC with human approval",
@@ -36,13 +36,17 @@ export function ProductTiers() {
             Built for developers who own their keys
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-text-muted">
-            A privacy-first desktop vault on your machine — no cloud sync. Map env vars to
-            secrets, approve each process, and run apps with client libraries or{" "}
+            A privacy-first desktop vault on your machine — no cloud sync. Keep secrets out
+            of repo{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs">
+              .env
+            </code>{" "}
+            files, approve each process, and run apps with{" "}
             <strong className="font-medium text-text">Argus Sandbox</strong> (
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs">
               argus run
             </code>
-            ) for OS-level HTTPS capture.
+            ) on Linux and Windows.
           </p>
         </motion.div>
 

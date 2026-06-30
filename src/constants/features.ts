@@ -27,7 +27,7 @@ export const FEATURES: Feature[] = [
     icon: KeyRound,
     title: "App buckets",
     description:
-      "One bucket per app or service. Map env names to vault secrets and rotate client tokens — your app keeps the same variable names, values stay in Argus.",
+      "One bucket per app or service. Map env names to vault secrets — commit a bucket ID and rotatable token, not API keys. A stolen token still needs Argus running and your approval.",
   },
   {
     icon: Globe,
@@ -51,7 +51,7 @@ export const FEATURES: Feature[] = [
     icon: ShieldCheck,
     title: "Human approval",
     description:
-      "Every request shows the real binary path. Grants expire on a schedule you control.",
+      "Every request shows the real binary path — including unexpected postinstall scripts. Grants expire on a schedule you control.",
   },
   {
     icon: Timer,

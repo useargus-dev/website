@@ -12,10 +12,15 @@ export function Features() {
           className="max-w-2xl"
         >
           <h2 className="text-3xl font-semibold tracking-tight text-text sm:text-4xl">
-            Privacy-first by design
+            Built for supply-chain reality
           </h2>
           <p className="mt-4 text-lg text-text-muted">
-            No cloud vault API. Your Rust core owns crypto, the database, and the socket on your machine.
+            When a dependency turns malicious, anything in{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
+              process.env
+            </code>{" "}
+            is fair game. Argus keeps secrets off disk in your repo and out of plaintext env
+            files — with approval gates and optional placeholders instead of real keys.
           </p>
         </motion.div>
 

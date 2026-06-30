@@ -29,15 +29,24 @@ export function Hero() {
             <span className="text-signal">You approve every access.</span>
           </h1>
           <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-text-muted">
-            Argus is a privacy-first developer secrets vault with app buckets and local IPC.
-            Map env vars to encrypted storage, add a bucket ID and token to your project env,
-            and grant access when a real process asks. v0.3 adds{" "}
-            <strong className="font-medium text-text">Argus Sandbox</strong> — wrap any command
-            with{" "}
+            Recent supply-chain attacks showed how a compromised npm or pip dependency can
+            read your entire{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
+              .env
+            </code>
+            . Argus keeps API keys out of the repo — map env names to an encrypted local
+            vault, put only a bucket ID and token in project env, and approve each process
+            before it receives values. With proxy enabled, apps get placeholders — not real
+            keys — in memory. v0.3 adds{" "}
+            <strong className="font-medium text-text">Argus Sandbox</strong>:{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
+              loadEnv()
+            </code>{" "}
+            +{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
               argus run
             </code>{" "}
-            for OS-level HTTPS capture on Linux and Windows.
+            on Linux and Windows.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <RouteButton to="/downloads" className="px-5">
