@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { LINKS } from "@/constants/links";
 import { SectionLink } from "@/components/layout/section-link";
 import { Brand } from "@/components/ui/brand";
+import { FooterTeam } from "@/components/layout/footer-team";
 
 export function Footer() {
   return (
@@ -15,7 +16,7 @@ export function Footer() {
               environments. AGPL-3.0 community edition.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             <div>
               <p className="text-xs font-medium uppercase tracking-wider text-text-muted">
                 Product
@@ -76,7 +77,7 @@ export function Footer() {
                   <a
                     href={LINKS.architectureDocs}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="text-text-muted hover:text-text"
                   >
                     Architecture
@@ -86,7 +87,7 @@ export function Footer() {
                   <a
                     href={LINKS.securityDocs}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="text-text-muted hover:text-text"
                   >
                     Security spec
@@ -101,9 +102,47 @@ export function Footer() {
               <ul className="mt-3 space-y-2 text-sm">
                 <li>
                   <a
+                    href={LINKS.releases}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-muted hover:text-text"
+                  >
+                    Releases
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={LINKS.npmNode}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-muted hover:text-text"
+                  >
+                    npm (@useargus/node)
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={LINKS.pypiUseargus}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-muted hover:text-text"
+                  >
+                    PyPI (useargus)
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/llms.txt"
+                    className="text-text-muted hover:text-text"
+                  >
+                    llms.txt (AI summary)
+                  </a>
+                </li>
+                <li>
+                  <a
                     href={LINKS.github}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="text-text-muted hover:text-text"
                   >
                     GitHub
@@ -117,16 +156,9 @@ export function Footer() {
                     Funding manifest
                   </a>
                 </li>
-                <li>
-                  <a
-                    href={LINKS.contactEmail}
-                    className="break-all text-text-muted hover:text-text"
-                  >
-                    ssamuel.sushant@gmail.com
-                  </a>
-                </li>
               </ul>
             </div>
+            <FooterTeam />
           </div>
         </div>
         <p className="mt-10 border-t border-border pt-6 text-xs text-text-muted">

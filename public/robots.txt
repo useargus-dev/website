@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# AI / LLM crawlers — structured summary at /llms.txt
+# See https://llmstxt.org/
+
+Sitemap: https://useargus.dev/sitemap.xml

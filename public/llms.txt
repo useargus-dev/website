@@ -1,0 +1,61 @@
+# Argus
+
+> Privacy-first local secrets vault for developers. Store API keys in an encrypted database on your machine — no cloud sync, no remote API for secrets. Approve each process before it receives env access. Optional HTTP proxy with placeholders instead of real keys in memory. Argus Sandbox (v0.3) captures outbound HTTPS at the OS on Linux and Windows via `argus run`.
+
+Argus is open source (AGPL-3.0). Early software — not independently security-audited.
+
+## Website
+
+- [Home](https://useargus.dev/): Product overview, features, Argus Sandbox teaser
+- [Usage](https://useargus.dev/usage): loadEnv() / load_env() + argus run workflow; legacy v0.2.x library proxy docs
+- [Security](https://useargus.dev/security): Threat model, cryptography, IPC grants, Argus Proxy, Argus Sandbox
+- [Downloads](https://useargus.dev/downloads): Windows, macOS, Linux installers (macOS: Sandbox capture not yet supported)
+- [Roadmap](https://useargus.dev/roadmap): Shipped phases and planned work
+
+## Source and packages
+
+- [Main repository](https://github.com/useargus-dev/argus): Desktop app (Rust/Tauri 2 + React), CLI, redirectors, docs
+- [Releases](https://github.com/useargus-dev/argus/releases): Installers for Windows, macOS, Linux
+- [Security specification](https://github.com/useargus-dev/argus/blob/main/docs/security.md): Full threat model and crypto parameters
+- [Architecture](https://github.com/useargus-dev/argus/blob/main/docs/architecture.md): IPC, proxy, sandbox design
+- [Run mode / Sandbox](https://github.com/useargus-dev/argus/blob/main/docs/run-mode.md): argus run usage and flags
+- [Node.js SDK — npm @useargus/node](https://www.npmjs.com/package/@useargus/node): loadEnv() for local IPC
+- [Node.js SDK — source](https://github.com/useargus-dev/node-argus)
+- [Python SDK — PyPI useargus](https://pypi.org/project/useargus/): load_env() for local IPC
+- [Python SDK — source](https://github.com/useargus-dev/py-argus)
+
+## What Argus does
+
+- **Encrypted vault**: SQLCipher database at ~/.argus/argus.db; Argon2id + AES-GCM
+- **App buckets**: Map env var names to secrets; project .env holds bucket ID + token only
+- **Local IPC**: Unix socket or Windows named pipe; OS-verified process fingerprint; human approval + TTL grants
+- **Argus Proxy**: Optional per-bucket loopback MITM; argus-proxy-* placeholders in env; rewrite at request time
+- **Argus Sandbox**: argus run wraps your app after loadEnv(); eBPF (Linux) or WinDivert (Windows) OS capture
+
+## Typical workflow (v0.3)
+
+1. Install Argus desktop and sign in
+2. Create bucket, enable proxy, map secrets to env names
+3. pip install useargus / npm install @useargus/node
+4. Call load_env() or loadEnv() in your app
+5. argus run node app.js (or uvicorn, npm start, etc.)
+
+## Platform support
+
+- **Linux**: Full Sandbox capture (native Linux, kernel ≥ 6.8, not WSL2); .deb / .rpm installers
+- **Windows**: Full Sandbox capture (WinDivert); NSIS installer
+- **macOS**: Vault + IPC + SDK; Sandbox OS capture planned (--no-proxy for env only today)
+
+## Contact
+
+- Email: ssamuel.sushant@gmail.com
+- Issues: https://github.com/useargus-dev/argus/issues
+
+## Team
+
+- [Sushant Samuel (LinkedIn)](https://www.linkedin.com/in/robosushie/)
+- [Sachin Samuel (LinkedIn)](https://www.linkedin.com/in/sachin-samuel-28a5a9260/)
+
+## Optional
+
+- [Funding manifest](https://useargus.dev/funding.json)

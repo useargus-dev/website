@@ -3,6 +3,8 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { PageLayout } from "@/components/layout/page-layout";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
+import { RouteMeta } from "@/components/seo/route-meta";
+import { SiteJsonLd } from "@/components/seo/site-json-ld";
 import { HomePage } from "@/pages/home";
 import { UsagePage } from "@/pages/usage";
 import { SecurityPage } from "@/pages/security";
@@ -12,6 +14,8 @@ import { DownloadsPage } from "@/pages/downloads";
 export default function App() {
   return (
     <BrowserRouter>
+      <SiteJsonLd />
+      <RouteMeta />
       <Analytics />
       <SpeedInsights />
       <ScrollToTop />

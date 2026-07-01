@@ -1,4 +1,4 @@
-import tokenSvg from "../../../public/token.svg?raw";
+import tokenSvg from "@/assets/token.svg?raw";
 
 import { cn } from "@/lib/cn";
 import type { CSSProperties } from "react";
