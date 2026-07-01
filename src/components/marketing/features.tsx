@@ -15,12 +15,12 @@ export function Features() {
             Built for supply-chain reality
           </h2>
           <p className="mt-4 text-lg text-text-muted">
-            When a dependency turns malicious, anything in{" "}
+            Compromised dependencies read{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
               process.env
-            </code>{" "}
-            is fair game. Argus keeps secrets off disk in your repo and out of plaintext env
-            files — with approval gates and optional placeholders instead of real keys.
+            </code>
+            . Argus Proxy gives your app placeholder tokens — real API keys are injected in
+            transit by the MITM proxy, not in your process, logs, or memory.
           </p>
         </motion.div>
 

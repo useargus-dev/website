@@ -31,9 +31,9 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
   },
   {
     id: "proxy",
-    title: "Enable proxy injection (optional)",
+    title: "Enable Argus Proxy",
     description:
-      "Turn on Argus Proxy for the bucket, enable inject proxy token on a mapping, and set allowed domains. Env vars get argus-proxy-* placeholders instead of real keys.",
+      "Turn on the bucket MITM proxy and inject proxy token per mapping. loadEnv() puts argus-proxy-* placeholders in env — your app never receives the real API key.",
   },
   {
     id: "env",
@@ -43,9 +43,9 @@ export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
   },
   {
     id: "run",
-    title: "Run your app",
+    title: "Run with argus run",
     description:
-      "Call loadEnv() / load_env() in your app, then wrap with argus run (Argus Sandbox) for OS capture on Linux and Windows.",
+      "Argus Sandbox routes outbound HTTPS through the same proxy. Placeholders go out; the proxy swaps in real keys in transit. No SDK proxy wiring on Linux/Windows.",
   },
   {
     id: "approve",

@@ -29,7 +29,7 @@ ARGUS_BUCKET_TOKEN=tok_...
 
 export const NODE_USAGE_GUIDE: UsageGuide = {
   intro:
-    "Install @useargus/node, call loadEnv() before your app reads process.env, then run inside Argus Sandbox so outbound HTTPS is captured at the OS on Linux and Windows.",
+    "Enable Argus Proxy on your bucket, install @useargus/node, call loadEnv() for argus-proxy-* placeholders in env, then argus run so HTTPS is routed through the MITM proxy — real keys injected in transit on Linux and Windows.",
   steps: [
     {
       step: "01",
@@ -51,7 +51,7 @@ export const NODE_USAGE_GUIDE: UsageGuide = {
       step: "03",
       title: "Load env at startup",
       description:
-        "Call loadEnv() before the rest of your app reads process.env. The first connection may open an Argus approval dialog (up to ~120s). Inside an active sandbox session, child processes skip a second popup.",
+        "Call loadEnv() before the rest of your app reads process.env. With Argus Proxy enabled, env holds argus-proxy-* placeholders — not real API keys. The first connection may open an Argus approval dialog (up to ~120s). Inside an active sandbox session, child processes skip a second popup.",
       filename: "app.js",
       code: `import { loadEnv } from "@useargus/node";
 
@@ -62,9 +62,9 @@ import "./server.js";`,
     },
     {
       step: "04",
-      title: "Run inside Argus Sandbox",
+      title: "Run with argus run",
       description:
-        "Wrap your app with argus run. Outbound HTTPS is redirected through your bucket proxy — use process.env in headers as usual; Argus rewrites placeholders upstream. On macOS or CI, use --no-proxy to load env without OS capture.",
+        "Argus Sandbox routes outbound HTTPS through the bucket MITM proxy. Your app sends placeholders in headers; the proxy swaps in real keys in transit. On macOS or CI, use --no-proxy to load placeholders without OS capture.",
       filename: "Terminal",
       code: `argus run node app.js
 argus run npm start
@@ -171,7 +171,7 @@ await fetch(url, { dispatcher, headers: { "x-api-key": process.env.ANTHROPIC_API
 
 export const PYTHON_USAGE_GUIDE: UsageGuide = {
   intro:
-    "Install useargus, call load_env() before your app reads os.environ, then run inside Argus Sandbox so outbound HTTPS is captured at the OS on Linux and Windows.",
+    "Enable Argus Proxy on your bucket, install useargus, call load_env() for argus-proxy-* placeholders in env, then argus run so HTTPS is routed through the MITM proxy — real keys injected in transit on Linux and Windows.",
   steps: [
     {
       step: "01",
@@ -192,7 +192,7 @@ export const PYTHON_USAGE_GUIDE: UsageGuide = {
       step: "03",
       title: "Load env at startup",
       description:
-        "Call load_env() before other modules read os.environ. Inside an active sandbox session, child processes skip a second approval popup.",
+        "Call load_env() before other modules read os.environ. With Argus Proxy enabled, env holds argus-proxy-* placeholders — not real API keys. Inside an active sandbox session, child processes skip a second approval popup.",
       filename: "main.py",
       code: `from useargus import load_env
 
@@ -204,9 +204,9 @@ uvicorn.run("app:app", host="0.0.0.0", port=8000)`,
     },
     {
       step: "04",
-      title: "Run inside Argus Sandbox",
+      title: "Run with argus run",
       description:
-        "Wrap your app with argus run. Outbound HTTPS is redirected through your bucket proxy — pass os.environ values in headers as usual. On macOS or CI, use --no-proxy to load env without OS capture.",
+        "Argus Sandbox routes outbound HTTPS through the bucket MITM proxy. Your app sends placeholders in headers; the proxy swaps in real keys in transit. On macOS or CI, use --no-proxy to load placeholders without OS capture.",
       filename: "Terminal",
       code: `argus run python main.py
 argus run uvicorn app:main --reload

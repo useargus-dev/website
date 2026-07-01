@@ -1,14 +1,14 @@
 # Argus
 
-> Privacy-first local secrets vault for developers. Store API keys in an encrypted database on your machine — no cloud sync, no remote API for secrets. Approve each process before it receives env access. Optional HTTP proxy with placeholders instead of real keys in memory. Argus Sandbox (v0.3) captures outbound HTTPS at the OS on Linux and Windows via `argus run`.
+> Privacy-first local secrets vault for developers. Store API keys in an encrypted database on your machine — no cloud sync, no remote API for secrets. Approve each process before it receives env access. Argus Proxy puts argus-proxy-* placeholder tokens in your app — real API keys are injected in transit by the bucket MITM proxy, not in process.env, console logs, or memory. Argus Sandbox (argus run) routes outbound HTTPS through that same proxy on Linux and Windows.
 
 Argus is open source (AGPL-3.0). Early software — not independently security-audited.
 
 ## Website
 
-- [Home](https://useargus.dev/): Product overview, features, Argus Sandbox teaser
-- [Usage](https://useargus.dev/usage): loadEnv() / load_env() + argus run workflow; legacy v0.2.x library proxy docs
-- [Security](https://useargus.dev/security): Threat model, cryptography, IPC grants, Argus Proxy, Argus Sandbox
+- [Home](https://useargus.dev/): Product overview, Argus Proxy & Sandbox pipeline
+- [Usage](https://useargus.dev/usage): Enable proxy → loadEnv() / load_env() → argus run; legacy v0.2.x library proxy docs
+- [Security](https://useargus.dev/security): Threat model, cryptography, IPC grants, Argus Proxy MITM, Argus Sandbox session controls
 - [Downloads](https://useargus.dev/downloads): Windows, macOS, Linux installers (macOS: Sandbox capture not yet supported)
 - [Roadmap](https://useargus.dev/roadmap): Shipped phases and planned work
 
@@ -29,22 +29,22 @@ Argus is open source (AGPL-3.0). Early software — not independently security-a
 - **Encrypted vault**: SQLCipher database at ~/.argus/argus.db; Argon2id + AES-GCM
 - **App buckets**: Map env var names to secrets; project .env holds bucket ID + token only
 - **Local IPC**: Unix socket or Windows named pipe; OS-verified process fingerprint; human approval + TTL grants
-- **Argus Proxy**: Optional per-bucket loopback MITM; argus-proxy-* placeholders in env; rewrite at request time
-- **Argus Sandbox**: argus run wraps your app after loadEnv(); eBPF (Linux) or WinDivert (Windows) OS capture
+- **Argus Proxy**: Per-bucket loopback MITM; argus-proxy-* placeholders in env; real secrets rewritten in transit on allowed hosts
+- **Argus Sandbox**: argus run routes outbound HTTPS to the bucket proxy (eBPF on Linux, WinDivert on Windows) — one pipeline with Proxy
 
 ## Typical workflow (v0.3)
 
 1. Install Argus desktop and sign in
-2. Create bucket, enable proxy, map secrets to env names
+2. Create bucket, enable Argus Proxy, map secrets to env names
 3. pip install useargus / npm install @useargus/node
-4. Call load_env() or loadEnv() in your app
-5. argus run node app.js (or uvicorn, npm start, etc.)
+4. Call load_env() or loadEnv() — placeholders land in env, not real keys
+5. argus run node app.js — Sandbox routes HTTPS through the MITM proxy; real keys injected in transit
 
 ## Platform support
 
-- **Linux**: Full Sandbox capture (native Linux, kernel ≥ 6.8, not WSL2); .deb / .rpm installers
-- **Windows**: Full Sandbox capture (WinDivert); NSIS installer
-- **macOS**: Vault + IPC + SDK; Sandbox OS capture planned (--no-proxy for env only today)
+- **Linux**: Full Proxy + Sandbox (native Linux, kernel ≥ 6.8, not WSL2); .deb / .rpm installers
+- **Windows**: Full Proxy + Sandbox (WinDivert); NSIS installer
+- **macOS**: Vault + IPC + SDK + Proxy placeholders; Sandbox OS capture planned (--no-proxy for env only today)
 
 ## Contact
 

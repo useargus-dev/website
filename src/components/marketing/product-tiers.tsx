@@ -2,22 +2,24 @@ import { motion } from "motion/react";
 import { Check } from "lucide-react";
 import { Link } from "react-router-dom";
 import { RouteButton } from "@/components/ui/button";
+import { PROXY_SANDBOX_TAGLINE } from "@/constants/proxy-sandbox";
 import { cn } from "@/lib/cn";
 
 const desktopFeatures = [
   "Single-user desktop vault",
   "SQLCipher encrypted database",
   "No API keys in repo .env — bucket ID + token only",
-  "Optional Argus Proxy (HTTP MITM)",
-  "argus run — Argus Sandbox on Linux & Windows",
+  "Argus Proxy — argus-proxy-* placeholders in env",
+  "Argus Sandbox (argus run) routes HTTPS through the proxy",
+  "Real keys injected in transit — not in process or logs",
   "Local IPC with human approval",
   "System tray + requests window",
 ];
 
 const integrationFeatures = [
-  "argus run uvicorn / node / cargo — no SDK wiring",
+  "Enable proxy → loadEnv() → argus run — one pipeline",
   "npm install @useargus/node · pip install useargus",
-  "loadEnv() / load_env() + argus run on Linux & Windows",
+  "No per-library proxy wiring on Linux & Windows",
   "Full installers bundle CLI + redirector (ARGUS_HOME)",
 ];
 
@@ -36,17 +38,12 @@ export function ProductTiers() {
             Built for developers who own their keys
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-text-muted">
-            A privacy-first desktop vault on your machine — no cloud sync. Keep secrets out
-            of repo{" "}
-            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs">
-              .env
-            </code>{" "}
-            files, approve each process, and run apps with{" "}
-            <strong className="font-medium text-text">Argus Sandbox</strong> (
+            A privacy-first desktop vault on your machine — no cloud sync. {PROXY_SANDBOX_TAGLINE}{" "}
+            Enable Argus Proxy, load env with placeholders, and{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs">
               argus run
-            </code>
-            ) on Linux and Windows.
+            </code>{" "}
+            routes HTTPS through the MITM proxy on Linux and Windows.
           </p>
         </motion.div>
 
@@ -92,15 +89,15 @@ export function ProductTiers() {
               Available now
             </p>
             <h3 className="mt-2 text-2xl font-semibold text-text">
-              CLI + Argus Sandbox
+              CLI · Proxy · Sandbox
             </h3>
             <p className="mt-2 text-sm text-text-muted">
-              Wrap any command with{" "}
+              Enable Argus Proxy for placeholder tokens in env. Wrap with{" "}
               <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs">
                 argus run
               </code>{" "}
-              or load secrets via SDK before your app starts — Argus must be signed in
-              locally.
+              so outbound HTTPS hits the same MITM proxy — real keys injected in transit
+              only. Argus must be signed in locally.
             </p>
             <ul className="mt-6 space-y-3">
               {integrationFeatures.map((item) => (

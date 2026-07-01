@@ -32,12 +32,13 @@ export function SecurityPage() {
         <p className="mt-4 leading-relaxed text-text-muted">
           Argus v0.3 is early software and has not been independently security-audited.
           This page describes the design intent and controls implemented in the open
-          source desktop app — Argus Proxy, Argus Sandbox (
+          source desktop app — Argus Proxy (placeholder tokens + MITM rewrite in transit)
+          and Argus Sandbox (
           <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs text-text">
             argus run
           </code>
-          ), and local IPC grants. For the full specification, parameter tables, and release
-          checklist, see the repository.
+          ), which routes HTTPS through that same proxy. For the full specification,
+          parameter tables, and release checklist, see the repository.
         </p>
         <a
           href={LINKS.securityDocs}
@@ -116,32 +117,39 @@ export function SecurityPage() {
         </SecuritySection>
 
         <SecuritySection
-          id="sandbox"
-          title="Argus Sandbox"
-          description="OS-level capture via argus run — grant delegation, relay attestation, and redirector peers."
+          id="proxy"
+          title="Argus Proxy & Sandbox"
+          description="Placeholder tokens in env, real secrets rewritten in transit — proxy MITM plus argus run OS routing on Linux and Windows."
         >
-          <SandboxDetail />
+          <ProxyDetail />
           <p className="mt-6 text-sm leading-relaxed text-text-muted">
-            Enable proxy on a bucket before using Argus Sandbox. The CLI creates a sandbox
-            session via IPC, starts the platform redirector (eBPF on Linux, WinDivert on
-            Windows), and injects CA bundle paths into the child environment. Real API
-            keys are rewritten at MITM time — same placeholder rules for Argus Sandbox
-            and legacy library proxy. See Usage for the recommended loadEnv + argus run
-            path and legacy v0.2.x client wiring.
+            Enable Argus Proxy on a bucket and turn on inject proxy token per mapping.
+            loadEnv() / load_env() puts argus-proxy-* placeholders in env — your app,
+            console logs, and crash dumps never hold real API keys. The bucket loopback
+            MITM proxy swaps placeholders for real secrets in HTTP headers and bodies on
+            allowed hosts, after grant checks. With{" "}
+            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs text-text">
+              argus run
+            </code>
+            , Argus Sandbox redirects outbound HTTPS to that proxy automatically (eBPF on
+            Linux, WinDivert on Windows). Legacy v0.2.x apps wire explicit SDK factory
+            helpers to the loopback port instead.
           </p>
         </SecuritySection>
 
         <SecuritySection
-          id="proxy"
-          title="Argus Proxy (HTTP MITM)"
-          description="Optional per-bucket loopback proxy that keeps real API keys out of process environment."
+          id="sandbox"
+          title="Sandbox session controls"
+          description="How argus run binds traffic to the proxy — grant delegation, relay attestation, and redirector peers."
         >
-          <ProxyDetail />
+          <SandboxDetail />
           <p className="mt-6 text-sm leading-relaxed text-text-muted">
-            Enable proxy on a bucket, turn on inject proxy token per mapping, and set
-            allowed domains. With Argus Sandbox, outbound HTTPS is redirected here
-            automatically after grant checks. Legacy v0.2.x apps wire explicit SDK factory
-            helpers to this loopback port instead.
+            Argus Sandbox requires Argus Proxy enabled on the bucket — capture and rewrite
+            share the same loopback MITM proxy. The CLI creates a sandbox session via IPC,
+            starts the platform redirector, and injects CA bundle paths into the child
+            environment. Real API keys are never injected into child env — only rewritten
+            at MITM time inside the proxy tunnel. See Usage for the recommended loadEnv +
+            argus run path and legacy v0.2.x client wiring.
           </p>
         </SecuritySection>
 

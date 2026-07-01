@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { ArrowRight, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 import { UsageLanguageTabs } from "@/components/sdk/usage-language-tabs";
+import { PROXY_SANDBOX_TAGLINE } from "@/constants/proxy-sandbox";
 import { cn } from "@/lib/cn";
 
 export function UsageTeaser() {
@@ -16,25 +17,25 @@ export function UsageTeaser() {
         >
           <p className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-signal">
             <Package size={14} aria-hidden />
-            SDKs & Argus Sandbox
+            SDKs · Argus Proxy · Sandbox
           </p>
           <h2 className="mt-2 text-3xl font-semibold tracking-tight text-text sm:text-4xl">
-            Load env, run in the sandbox
+            Placeholders in env. Real keys in transit.
           </h2>
           <p className="mt-4 text-lg text-text-muted">
-            Install the Python or Node SDK, call{" "}
+            {PROXY_SANDBOX_TAGLINE} Enable Argus Proxy, call{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
               loadEnv()
             </code>{" "}
             /{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
               load_env()
-            </code>{" "}
-            in your app, then wrap it with{" "}
+            </code>
+            , then{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
               argus run
             </code>{" "}
-            for OS-level HTTPS capture on Linux and Windows.
+            — the MITM proxy injects real secrets on the wire, not in your process.
           </p>
           <Link
             to="/usage"

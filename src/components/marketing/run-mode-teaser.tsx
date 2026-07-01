@@ -2,7 +2,16 @@ import { motion } from "motion/react";
 import { ArrowRight, Terminal } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CodePanel } from "@/components/sdk/code-panel";
-import { SANDBOX_SDK_EXAMPLES, RUN_MODE_FLOW, RUN_MODE_NOTES, RUN_MODE_PLATFORMS } from "@/constants/run-mode";
+import { ProxySandboxExplainer } from "@/components/marketing/proxy-sandbox-explainer";
+import {
+  PROXY_SANDBOX_TAGLINE,
+  PROXY_SANDBOX_PREREQUISITE,
+} from "@/constants/proxy-sandbox";
+import {
+  SANDBOX_SDK_EXAMPLES,
+  RUN_MODE_NOTES,
+  RUN_MODE_PLATFORMS,
+} from "@/constants/run-mode";
 import { cn } from "@/lib/cn";
 
 export function ArgusSandboxTeaser() {
@@ -17,26 +26,21 @@ export function ArgusSandboxTeaser() {
         >
           <p className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-signal">
             <Terminal size={14} aria-hidden />
-            Argus Sandbox · v0.3
+            Argus Proxy & Sandbox
           </p>
           <h2 className="mt-2 text-3xl font-semibold tracking-tight text-text sm:text-4xl">
-            Load env, run in the sandbox
+            Placeholders in your app. Real keys in transit.
           </h2>
           <p className="mt-4 text-lg text-text-muted">
-            Your app calls{" "}
+            {PROXY_SANDBOX_TAGLINE} Enable Argus Proxy, call{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
               loadEnv()
-            </code>{" "}
-            /{" "}
-            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
-              load_env()
             </code>
             , then{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
               argus run
             </code>{" "}
-            wraps the process. One approval, then outbound HTTPS is redirected through your
-            bucket proxy.
+            — the MITM proxy injects real secrets on the wire, not in your process.
           </p>
           <Link
             to="/usage"
@@ -53,41 +57,19 @@ export function ArgusSandboxTeaser() {
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-10"
+          className="mt-10 grid gap-6 lg:grid-cols-2"
         >
+          <div className="rounded-xl border border-border bg-surface p-6 shadow-subtle">
+            <ProxySandboxExplainer showSummary={false} />
+          </div>
           <CodePanel filename="terminal" code={SANDBOX_SDK_EXAMPLES} />
         </motion.div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+        <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="rounded-xl border border-border bg-surface p-6 shadow-subtle"
-          >
-            <h3 className="text-lg font-medium text-text">How capture works</h3>
-            <ol className="mt-4 space-y-4">
-              {RUN_MODE_FLOW.map((step, i) => (
-                <li key={step.title} className="flex gap-3">
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-signal/10 text-xs font-semibold text-signal">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <p className="font-medium text-text">{step.title}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-text-muted">
-                      {step.description}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.08 }}
             className="rounded-xl border border-border bg-surface p-6 shadow-subtle"
           >
             <h3 className="text-lg font-medium text-text">Platform support</h3>
@@ -104,15 +86,13 @@ export function ArgusSandboxTeaser() {
                         "rounded-full px-2 py-0.5 text-xs font-medium",
                         platform.capture === "supported"
                           ? "bg-success/10 text-success"
-                          : platform.capture === "secrets-only"
-                            ? "border border-border bg-surface-muted text-text-muted"
-                            : "border border-border bg-surface-muted text-text-muted",
+                          : "border border-border bg-surface-muted text-text-muted",
                       )}
                     >
                       {platform.capture === "supported"
-                        ? "OS capture"
+                        ? "Proxy + Sandbox"
                         : platform.capture === "secrets-only"
-                          ? "Secrets only"
+                          ? "Proxy placeholders only"
                           : "Planned"}
                     </span>
                   </div>
@@ -121,12 +101,24 @@ export function ArgusSandboxTeaser() {
                 </li>
               ))}
             </ul>
-            <ul className="mt-5 space-y-2 border-t border-border pt-5 text-sm text-text-muted">
-              {RUN_MODE_NOTES.slice(0, 3).map((note) => (
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.08 }}
+            className="rounded-xl border border-border bg-surface p-6 shadow-subtle"
+          >
+            <h3 className="text-lg font-medium text-text">Notes</h3>
+            <ul className="mt-4 space-y-2 text-sm text-text-muted">
+              <li className="flex gap-2">
+                <span className="text-signal" aria-hidden>·</span>
+                <span>{PROXY_SANDBOX_PREREQUISITE}</span>
+              </li>
+              {RUN_MODE_NOTES.slice(1, 4).map((note) => (
                 <li key={note} className="flex gap-2">
-                  <span className="text-signal" aria-hidden>
-                    ·
-                  </span>
+                  <span className="text-signal" aria-hidden>·</span>
                   <span>{note}</span>
                 </li>
               ))}

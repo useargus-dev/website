@@ -215,12 +215,13 @@ export const PROXY_DETAILS = {
   loopback: [
     "Per-bucket toggle binds 127.0.0.1 on ports 9000–9100",
     "IPC ok response includes httpProxy, httpsProxy, noProxy, caBundlePath",
-    "v0.3: Argus Sandbox redirects captured HTTPS here — no per-client SDK wiring",
+    "v0.3: argus run routes captured HTTPS here — same MITM rewrite as library proxy",
     "Legacy v0.2.x: SDK factory helpers wire explicit client proxy + CA",
   ],
   placeholders: [
     "Proxy-enabled mappings inject argus-proxy-* strings into env — never real keys",
-    "Real secrets are rewritten in headers/bodies at MITM time only",
+    "Console logs, crash dumps, and process memory only see placeholders",
+    "Real secrets rewritten in headers/bodies at MITM time — in transit only",
     "Per-mapping allowed domains (Allow all or Restrict with suffix match)",
     "Empty restrict list blocks all hosts until domains are added",
   ],
@@ -234,6 +235,7 @@ export const PROXY_DETAILS = {
 
 export const SANDBOX_DETAILS = {
   lifecycle: [
+    "Requires Argus Proxy enabled — Sandbox routes traffic to the same loopback MITM proxy",
     "sandbox_create prompts once — child PIDs inherit the session without a second popup",
     "Session bound to parent_fingerprint — only the creator can register PIDs or revoke",
     "Grant revoke, bucket proxy disable, or tray deactivate cascade session revoke",

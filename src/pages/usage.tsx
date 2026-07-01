@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
+import { ProxySandboxExplainer } from "@/components/marketing/proxy-sandbox-explainer";
 import { UsageStepGuide } from "@/components/sdk/usage-step-guide";
 import { UsageLanguageTabs } from "@/components/sdk/usage-language-tabs";
-import { RUN_MODE_FLOW, RUN_MODE_NOTES, RUN_MODE_PLATFORMS } from "@/constants/run-mode";
+import { PROXY_SANDBOX_TAGLINE } from "@/constants/proxy-sandbox";
+import { RUN_MODE_NOTES, RUN_MODE_PLATFORMS } from "@/constants/run-mode";
 import { LEGACY_PROXY_GUIDES } from "@/constants/usage-guide";
 import { SDK_SHARED_NOTES } from "@/constants/sdk";
 import { cn } from "@/lib/cn";
@@ -60,10 +62,10 @@ export function UsagePage() {
           Usage
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-text sm:text-4xl">
-          Load env, run in Argus Sandbox
+          Enable proxy, load env, argus run
         </h1>
         <p className="mt-4 max-w-3xl leading-relaxed text-text-muted">
-          Call{" "}
+          {PROXY_SANDBOX_TAGLINE} Enable Argus Proxy on your bucket, call{" "}
           <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
             loadEnv()
           </code>{" "}
@@ -71,12 +73,16 @@ export function UsagePage() {
           <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
             load_env()
           </code>{" "}
-          in your app, then wrap it with{" "}
+          for{" "}
+          <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
+            argus-proxy-*
+          </code>{" "}
+          placeholders in env, then wrap with{" "}
           <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
             argus run
           </code>
-          . Argus injects placeholders from your bucket and captures outbound HTTPS at the
-          OS on Linux and Windows — no per-client proxy wiring.
+          . Argus Sandbox routes HTTPS through the same MITM proxy — real keys are injected
+          in transit only, not in your process or logs.
         </p>
       </motion.header>
 
@@ -98,36 +104,21 @@ export function UsagePage() {
         className="mt-16 scroll-mt-24"
       >
         <h2 className="text-2xl font-semibold tracking-tight text-text">
-          About Argus Sandbox
+          Argus Proxy & Sandbox
         </h2>
         <p className="mt-3 max-w-3xl text-text-muted">
-          Argus Sandbox is not a standalone CLI workflow — your app loads env through the SDK
-          first, then runs inside{" "}
+          One pipeline: placeholders in your app, real secrets rewritten inside the bucket
+          MITM proxy on the wire.{" "}
           <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
             argus run
-          </code>
-          . One terminal approval covers the whole process tree; child PIDs inherit the
-          session without a second popup.
+          </code>{" "}
+          (Argus Sandbox) routes outbound HTTPS to that proxy on Linux and Windows — one
+          approval covers the whole process tree; child PIDs inherit without a second popup.
         </p>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">
           <div className="rounded-xl border border-border bg-surface p-5 sm:p-6">
-            <h3 className="text-lg font-semibold text-text">How it works</h3>
-            <ol className="mt-4 space-y-4">
-              {RUN_MODE_FLOW.map((step, i) => (
-                <li key={step.title} className="flex gap-3">
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-signal/10 text-xs font-semibold text-signal">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <p className="font-medium text-text">{step.title}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-text-muted">
-                      {step.description}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <ProxySandboxExplainer showSummary={false} />
           </div>
 
           <div className="space-y-6">
@@ -150,8 +141,10 @@ export function UsagePage() {
                         )}
                       >
                         {platform.capture === "supported"
-                          ? "OS capture"
-                          : "Secrets only (--no-proxy)"}
+                          ? "Proxy + Sandbox"
+                          : platform.capture === "secrets-only"
+                            ? "Proxy placeholders only"
+                            : "Planned"}
                       </span>
                     </div>
                     <p className="mt-2 text-sm text-text-muted">{platform.installer}</p>
@@ -222,8 +215,8 @@ export function UsagePage() {
         transition={{ delay: 0.15 }}
         className="mt-8 text-center text-sm text-text-muted"
       >
-        <Link to="/security#sandbox" className="font-medium text-signal hover:underline">
-          Argus Sandbox security
+        <Link to="/security#proxy" className="font-medium text-signal hover:underline">
+          Argus Proxy & Sandbox security
         </Link>
         {" · "}
         <Link to="/roadmap" className="font-medium text-signal hover:underline">

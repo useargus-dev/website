@@ -56,7 +56,7 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
     id: "proxy",
     title: "Argus Proxy (v0.2.x)",
     description:
-      "Optional per-bucket HTTP MITM proxy so proxy-enabled mappings use placeholders — real secrets rewritten only at outbound request time.",
+      "Per-bucket loopback MITM proxy — proxy-enabled mappings use argus-proxy-* placeholders in env; real secrets rewritten in transit only, not in process memory.",
     shipped: true,
     items: [
       { label: "Per-bucket loopback proxy (ports 9000–9100)", done: true },
@@ -73,7 +73,7 @@ export const ROADMAP_PHASES: RoadmapPhase[] = [
     id: "argus-sandbox",
     title: "Argus Sandbox",
     description:
-      "v0.3 — argus run wraps any command and intercepts outbound HTTP/HTTPS at the OS level. Linux and Windows capture ship in full installers; macOS capture and CLI polish are next.",
+      "v0.3 — argus run routes outbound HTTPS through the bucket MITM proxy (same pipeline as Argus Proxy). Linux and Windows ship in full installers; macOS capture and CLI polish are next.",
     shipped: false,
     statusLabel: "In progress",
     items: [

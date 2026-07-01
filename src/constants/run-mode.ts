@@ -1,3 +1,5 @@
+import { PROXY_SANDBOX_FLOW, PROXY_SANDBOX_PREREQUISITE } from "@/constants/proxy-sandbox";
+
 export type RunModePlatform = {
   id: string;
   name: string;
@@ -30,41 +32,20 @@ export const RUN_MODE_PLATFORMS: RunModePlatform[] = [
   },
 ];
 
-export const SANDBOX_SDK_EXAMPLES = `# Call loadEnv() / load_env() in your app, then wrap with Argus Sandbox
+export const SANDBOX_SDK_EXAMPLES = `# Enable Argus Proxy, loadEnv() / load_env() in your app, then argus run
 argus run node app.js
 argus run uvicorn main:app --reload
 argus run npm start
 
-# macOS or CI — load env without OS capture
+# macOS or CI — placeholders without OS capture
 argus run --no-proxy -- node app.js`;
 
 export const RUN_MODE_EXAMPLES = SANDBOX_SDK_EXAMPLES;
 
-export const RUN_MODE_FLOW = [
-  {
-    title: "Approve once",
-    description:
-      "You approve argus run in the terminal. Child processes inherit the sandbox session — no per-uvicorn popup.",
-  },
-  {
-    title: "OS redirect",
-    description:
-      "A platform redirector (eBPF on Linux, WinDivert on Windows) sends captured HTTPS to your bucket's loopback proxy.",
-  },
-  {
-    title: "Same rewrite engine",
-    description:
-      "Argus Proxy rewrites argus-proxy-* placeholders to real secrets — no per-client HTTP client wiring when capture is active.",
-  },
-  {
-    title: "Teardown",
-    description:
-      "When your command exits, the redirector stops and the sandbox session is revoked automatically.",
-  },
-] as const;
+export const RUN_MODE_FLOW = PROXY_SANDBOX_FLOW;
 
 export const RUN_MODE_NOTES = [
-  "Requires Argus desktop signed in with proxy enabled on the bucket.",
+  PROXY_SANDBOX_PREREQUISITE,
   "Install the full desktop bundle — releases ship CLI + redirector together (no standalone sidecar zips).",
   "CLI resolves sidecars via ARGUS_HOME (set by the installer) — the installer does not modify your Path env var.",
   "Certificate pinning, gRPC, QUIC, WSL2, and Docker bridge networks are not supported for capture.",

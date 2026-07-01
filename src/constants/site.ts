@@ -8,7 +8,7 @@ export const SITE_URL =
 export const SITE_NAME = "Argus";
 
 export const DEFAULT_DESCRIPTION =
-  "Privacy-first local secrets vault for developers. Keep API keys out of repo .env files, approve each process, and run apps with Argus Sandbox on Linux and Windows.";
+  "Privacy-first local secrets vault for developers. Argus Proxy puts placeholder tokens in your app — real API keys are injected in transit by the MITM proxy. Run with argus run (Argus Sandbox) on Linux and Windows.";
 
 export type PageMetaConfig = {
   title: string;
@@ -24,9 +24,9 @@ export const PAGE_META: Record<string, PageMetaConfig> = {
     path: "/",
   },
   "/usage": {
-    title: "Usage — loadEnv + Argus Sandbox",
+    title: "Usage — Argus Proxy + argus run",
     description:
-      "Install Python or Node SDKs, call loadEnv() / load_env(), and run inside Argus Sandbox (argus run) for OS-level HTTPS capture on Linux and Windows.",
+      "Enable Argus Proxy for argus-proxy-* placeholders in env, call loadEnv() / load_env(), then argus run — real keys injected in transit by the MITM proxy on Linux and Windows.",
     path: "/usage",
   },
   "/security": {

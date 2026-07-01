@@ -9,6 +9,10 @@ import {
   Timer,
   type LucideIcon,
 } from "lucide-react";
+import {
+  PROXY_FEATURE_SUMMARY,
+  SANDBOX_FEATURE_SUMMARY,
+} from "@/constants/proxy-sandbox";
 
 export type Feature = {
   title: string;
@@ -32,14 +36,12 @@ export const FEATURES: Feature[] = [
   {
     icon: Globe,
     title: "Argus Proxy",
-    description:
-      "Optional per-bucket HTTP MITM so clients get argus-proxy-* placeholders — real keys stay in Argus until outbound HTTP rewrite.",
+    description: PROXY_FEATURE_SUMMARY,
   },
   {
     icon: Terminal,
     title: "Argus Sandbox",
-    description:
-      "Call load_env() / loadEnv() in your app, then wrap with argus run — outbound HTTPS is captured at the OS level on Linux and Windows.",
+    description: SANDBOX_FEATURE_SUMMARY,
   },
   {
     icon: Fingerprint,

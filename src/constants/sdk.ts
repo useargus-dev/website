@@ -38,7 +38,7 @@ export const SDK_LANGUAGES: SdkLanguage[] = [
     },
     sourceRepoUrl: "https://github.com/useargus-dev/node-argus",
     summary:
-      "Load bucket secrets with loadEnv(), then run inside Argus Sandbox (argus run) for OS-level HTTPS capture on Linux and Windows.",
+      "Enable Argus Proxy for argus-proxy-* placeholders, call loadEnv(), then argus run — real keys injected in transit by the MITM proxy on Linux and Windows.",
     blocks: [],
   },
   {
@@ -53,7 +53,7 @@ export const SDK_LANGUAGES: SdkLanguage[] = [
     },
     sourceRepoUrl: "https://github.com/useargus-dev/py-argus",
     summary:
-      "Load bucket secrets with load_env(), then run inside Argus Sandbox (argus run) for OS-level HTTPS capture on Linux and Windows.",
+      "Enable Argus Proxy for argus-proxy-* placeholders, call load_env(), then argus run — real keys injected in transit by the MITM proxy on Linux and Windows.",
     blocks: [],
   },
   {
@@ -121,12 +121,13 @@ public class Main {
 ];
 
 export const SDK_SHARED_NOTES = [
+  "Enable Argus Proxy on the bucket before loadEnv() / load_env() — env gets argus-proxy-* placeholders, not real keys.",
   "Call loadEnv() / load_env() before the rest of your app reads environment variables.",
   "Put only ARGUS_BUCKET_ID and ARGUS_BUCKET_TOKEN in .env — not secret values.",
-  "Enable Argus Proxy on the bucket so mappings receive argus-proxy-* placeholders.",
-  "Wrap your app with argus run — one approval per session; child PIDs inherit without a second popup.",
+  "argus run routes HTTPS through the bucket MITM proxy — real secrets injected in transit only.",
+  "One approval per argus run session; child PIDs inherit without a second popup.",
   "Idle app lock does not block IPC; only sign-out returns locked.",
   ".env overrides bucket values when the same key exists in both.",
-  "On macOS or CI, use argus run --no-proxy to load env without OS capture.",
+  "On macOS or CI, use argus run --no-proxy for placeholders without OS capture.",
   "Full installers bundle CLI + redirector; ARGUS_HOME is set by the installer.",
 ] as const;

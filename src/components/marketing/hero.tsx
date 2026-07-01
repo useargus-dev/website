@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { ArrowRight, Code2 } from "lucide-react";
+import { HERO_PROXY_SANDBOX_BLURB, PROXY_SANDBOX_TAGLINE } from "@/constants/proxy-sandbox";
 import { LINKS } from "@/constants/links";
 import { LinkButton, RouteButton } from "@/components/ui/button";
 import { AppScreenPreview } from "./app-screen-preview";
@@ -29,24 +30,15 @@ export function Hero() {
             <span className="text-signal">You approve every access.</span>
           </h1>
           <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-text-muted">
-            Recent supply-chain attacks showed how a compromised npm or pip dependency can
-            read your entire{" "}
+            Recent supply-chain attacks showed how a compromised dependency can read your
+            entire{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
               .env
             </code>
-            . Argus keeps API keys out of the repo — map env names to an encrypted local
-            vault, put only a bucket ID and token in project env, and approve each process
-            before it receives values. With proxy enabled, apps get placeholders — not real
-            keys — in memory. v0.3 adds{" "}
-            <strong className="font-medium text-text">Argus Sandbox</strong>:{" "}
-            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
-              loadEnv()
-            </code>{" "}
-            +{" "}
-            <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-sm text-text">
-              argus run
-            </code>{" "}
-            on Linux and Windows.
+            . Argus keeps keys in an encrypted local vault — your repo and project env hold
+            a bucket ID and token, not API keys.{" "}
+            <span className="font-medium text-text">{PROXY_SANDBOX_TAGLINE}</span>{" "}
+            {HERO_PROXY_SANDBOX_BLURB}
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <RouteButton to="/downloads" className="px-5">

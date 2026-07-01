@@ -25,15 +25,15 @@ export function HowItWorks() {
           className="text-center"
         >
           <h2 className="text-3xl font-semibold tracking-tight text-text sm:text-4xl">
-            From vault to bucket to Argus Sandbox
+            From vault to proxy to sandbox
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-text-muted">
-            Eight steps from unlock to running your app — with optional proxy injection
-            or Argus Sandbox for OS-level capture via{" "}
+            Eight steps — placeholders in your app, real keys injected in transit by the
+            MITM proxy, and{" "}
             <code className="rounded bg-surface-muted px-1 py-0.5 font-mono text-xs">
               argus run
-            </code>
-            .
+            </code>{" "}
+            to route HTTPS there automatically.
           </p>
         </motion.div>
 
