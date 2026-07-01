@@ -57,12 +57,12 @@ export function ArgusSandboxTeaser() {
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-10 grid gap-6 lg:grid-cols-2"
+          className="mt-10 grid items-stretch gap-6 lg:grid-cols-2"
         >
-          <div className="rounded-xl border border-border bg-surface p-6 shadow-subtle">
+          <div className="flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-subtle">
             <ProxySandboxExplainer showSummary={false} />
           </div>
-          <CodePanel filename="terminal" code={SANDBOX_SDK_EXAMPLES} />
+          <CodePanel filename="terminal" code={SANDBOX_SDK_EXAMPLES} className="h-full" />
         </motion.div>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-2">

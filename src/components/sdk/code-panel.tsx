@@ -24,11 +24,11 @@ export function CodePanel({ filename, code, className }: CodePanelProps) {
   return (
     <div
       className={cn(
-        "min-w-0 overflow-hidden rounded-xl border border-border bg-[#0e0f12] shadow-sm dark:border-white/10",
+        "flex min-h-0 min-w-0 h-full w-full flex-col overflow-hidden rounded-xl border border-border bg-[#0e0f12] shadow-sm dark:border-white/10",
         className,
       )}
     >
-      <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2.5">
+      <div className="flex shrink-0 items-center justify-between gap-3 border-b border-white/10 px-4 py-2.5">
         <span className="truncate font-mono text-xs text-white/60">{filename}</span>
         <button
           type="button"
@@ -40,7 +40,7 @@ export function CodePanel({ filename, code, className }: CodePanelProps) {
           <span className="hidden sm:inline">{copied ? "Copied" : "Copy"}</span>
         </button>
       </div>
-      <pre className="overflow-x-auto p-4 font-mono text-[13px] leading-relaxed text-[#e8e6e3]">
+      <pre className="min-h-0 flex-1 whitespace-pre-wrap break-words p-4 font-mono text-[13px] leading-relaxed text-[#e8e6e3]">
         <code>{code}</code>
       </pre>
     </div>

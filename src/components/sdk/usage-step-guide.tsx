@@ -56,7 +56,7 @@ function UsageStepRow({ step }: { step: UsageGuideStep }) {
   const code = activeLibrary?.code ?? step.code ?? "";
 
   return (
-    <div className="grid gap-6 border-b border-border py-10 last:border-b-0 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-4">
+    <div className="grid items-stretch gap-6 border-b border-border py-10 last:border-b-0 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-4">
       <div className="flex min-w-0 gap-4 lg:gap-5">
         <div
           className="flex size-8 shrink-0 items-center justify-center rounded-md border border-border bg-surface font-mono text-xs font-medium text-text-muted"
@@ -79,8 +79,8 @@ function UsageStepRow({ step }: { step: UsageGuideStep }) {
         </div>
       </div>
 
-      <div className="min-w-0 lg:pt-0">
-        <CodePanel filename={filename} code={code} />
+      <div className="min-w-0 h-full lg:pt-0">
+        <CodePanel filename={filename} code={code} className="h-full" />
       </div>
     </div>
   );
